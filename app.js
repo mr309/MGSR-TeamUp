@@ -1,4 +1,4 @@
-const players = [  
+const players = [
   "@mr309#3290",
   "@__Henry__#9095",
   "@Andrew-Morse#8509",
@@ -14,11 +14,28 @@ const players = [
   "@Rabbit#5852",
   "@Splash#0972",
   "@The Mario Odyssey#6494",
-  "@🐙MistahKush#5119"
-]
+  "@🐙MistahKush#5119",
+];
+
+const list = document.querySelectorAll(".players");
+
+//players.forEach((item) => {
+//  let option = document.createElement("option");
+//  option.value = item;
+//  list.appendChild(option);
+//});
+
+//Trying to create a datalist for each match placement.
+//Struggling to get each input to populate correctly.
+
+players.forEach((item) => {
+  let option = document.createElement("option");
+  option.value = item;
+  list.forEach((e) => e.appendChild(option));
+});
 
 function results(r1, r2, r3, r4) {
-    console.log(`/game record game: MGSR 1v1 result: #1 ${r1} #2 ${r2}`)
+  console.log(`/game record game: MGSR 1v1 result: #1 ${r1} #2 ${r2}`);
 }
 
-results(players[0], players[1])
+results(players[0], players[1]);
