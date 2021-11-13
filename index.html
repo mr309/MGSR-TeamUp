@@ -11,22 +11,31 @@
 <body>
     <h1>Players</h1>
     <div>
+       
         <label for="playerlist">First Place</label>
-        <input name="playerlist" list="players"/>
-            <datalist class="players" id="players"></datalist>
-    
-            <label for="playerlist">Second Place</label>
-            <input name="playerlist" list="players"/>
-                <datalist class="players"></datalist>
+        <br>
+        <input name="playerlist" list="players" id="firstplace" /><button id="1st" onclick="AddResult(this)">Add</button>
+        <br>
+        <label for="playerlist">Second Place</label><br>
+        <input name="playerlist" list="players" id="secondplace"/>
+            <button id="2nd" onclick="AddResult(this)">Add</button>
+        <br>
+        <label for="playerlist">Third Place</label><br>
+        <input name="playerlist" list="players" id="thirdplace"/>
+            <button id="3rd" onclick="AddResult(this)">Add</button>  
+        <br>
+        <label for="playerlist">Fourth Place</label><br>
+        <input name="playerlist" list="players" id="fourthplace"/>
+            <button id="4th" onclick="AddResult(this)">Add</button>
+        <datalist id="players"></datalist>   
+    </div>
+    <div>
+        <p>
+            <label for="results">Results Command</label><br>
+            <textarea id="results" style="width: 300px">/game record game: MGSR 1v1 results:</textarea>
+        </p>
+    </div>
 
-                <label for="playerlist">Third Place</label>
-                <input name="playerlist" list="players"/>
-                    <datalist class="players"></datalist>
-
-                    <label for="playerlist">Fourth Place</label>
-                    <input name="playerlist" list="players"/>
-                        <datalist class="players"></datalist>
-        </div>
     
     
     <script src="app.js"></script>
