@@ -66,5 +66,5 @@ function AddResult(button) {
 function reset() {
   let fields = document.querySelectorAll("input");
   fields.forEach((e) => (e.value = ""));
-  document.getElementById("results").value = "/game record game: MGSR 1v1 results:";
+  document.getElementById("results").value = "/game record game: MGSR 1v1 result:";
 }
