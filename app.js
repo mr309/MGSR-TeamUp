@@ -15,6 +15,10 @@ const players = [
   "@Splash#0972",
   "@The Mario Odyssey#6494",
   "@🐙MistahKush#5119",
+  "@jrichgames#5710",
+  "@zetite#0422",
+  "@WoogieGeezer#9537",
+  "@Hamm#1714",
 ];
 
 const list = document.querySelector("#players");
@@ -46,15 +50,21 @@ function AddResult(button) {
   let resultsBox = document.getElementById("results");
 
   if (button.id == "1st") {
-    resultsBox.innerHTML += " #1 " + document.getElementById("firstplace").value;
+    resultsBox.value += " #1 " + document.getElementById("firstplace").value;
   }
   if (button.id == "2nd") {
-    resultsBox.innerHTML += " #2 " + document.getElementById("secondplace").value;
+    resultsBox.value += " #2 " + document.getElementById("secondplace").value;
   }
   if (button.id == "3rd") {
-    resultsBox.innerHTML += " #3 " + document.getElementById("thirdplace").value;
+    resultsBox.value += " #3 " + document.getElementById("thirdplace").value;
   }
   if (button.id == "4th") {
-    resultsBox.innerHTML += " #4 " + document.getElementById("fourthplace").value;
+    resultsBox.value += " #4 " + document.getElementById("fourthplace").value;
   }
+}
+
+function reset() {
+  let fields = document.querySelectorAll("input");
+  fields.forEach((e) => (e.value = ""));
+  document.getElementById("results").value = "/game record game: MGSR 1v1 results:";
 }
