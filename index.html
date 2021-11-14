@@ -14,20 +14,30 @@
        
         <label for="playerlist">First Place</label>
         <br>
-        <input name="playerlist" list="players" id="firstplace" /><button id="1st" onclick="AddResult(this)">Add</button>
+        <select name="playerlist" list="players" id="firstplace">
+            <option label=" "></option>
+        </select>
+            <button id="1st" onclick="AddResult(this)">Add</button>
         <br>
         <label for="playerlist">Second Place</label><br>
-        <input name="playerlist" list="players" id="secondplace"/>
+        <select name="playerlist" list="players" id="secondplace">
+            <option label=" "></option>
+        </select>
             <button id="2nd" onclick="AddResult(this)">Add</button>
         <br>
+        <p style="display: none">
         <label for="playerlist">Third Place</label><br>
-        <input name="playerlist" list="players" id="thirdplace"/>
+        <select name="playerlist" list="players" id="thirdplace">
+            <option label=" "></option>
+        </select>
             <button id="3rd" onclick="AddResult(this)">Add</button>  
         <br>
         <label for="playerlist">Fourth Place</label><br>
-        <input name="playerlist" list="players" id="fourthplace"/>
+        <select name="playerlist" list="players" id="fourthplace">
+            <option label=" "></option>
+        </select>
             <button id="4th" onclick="AddResult(this)">Add</button>
-        <datalist id="players"></datalist>   
+        </p>  
     </div>
     <div>
         <p>

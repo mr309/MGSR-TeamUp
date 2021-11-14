@@ -1,3 +1,4 @@
+/*
 const players = [
   "@mr309#3290",
   "@__Henry__#9095",
@@ -20,6 +21,7 @@ const players = [
   "@WoogieGeezer#9537",
   "@Hamm#1714",
 ];
+*/
 
 const userIds = [
   ["178739102101929984", "Master Bates"],
@@ -43,24 +45,30 @@ const userIds = [
   ["700822583351705640", "The Mario Odyssey"],
 ];
 
-const list = document.querySelector("#players");
+// const list = document.querySelector("#players");
+const list = document.querySelectorAll("[name='playerlist']");
 
-//players.forEach((item) => {
-//  let option = document.createElement("option");
-//  option.value = item;
-//  list.appendChild(option);
-//});
-
-//Trying to create a datalist for each match placement.
-//Struggling to get each input to populate correctly.
-
-players.forEach((item) => {
+userIds.forEach((item) => {
   let option = document.createElement("option");
-  option.value = item;
-  //list.forEach((e) => {
-  list.appendChild(option);
-  //});
+  option.value = item[1];
+  option.textContent = item[1];
+  option.setAttribute("data-userid", item[0]);
+  let option2 = option.cloneNode(true);
+  let option3 = option.cloneNode(true);
+  let option4 = option.cloneNode(true);
+  list[0].appendChild(option);
+  list[1].appendChild(option2);
+  list[2].appendChild(option3);
+  list[3].appendChild(option4);
 });
+
+// players.forEach((item) => {
+//   let option = document.createElement("option");
+//   option.value = item;
+//   //list.forEach((e) => {
+//   list.appendChild(option);
+//   //});
+// });
 
 // function results(r1, r2, r3, r4) {
 //   console.log(`/game record game: MGSR 1v1 result: #1 ${r1} #2 ${r2}`);
@@ -72,16 +80,20 @@ function AddResult(button) {
   let resultsBox = document.getElementById("results");
 
   if (button.id == "1st") {
-    resultsBox.value += " #1 " + document.getElementById("firstplace").value;
+    resultsBox.value += ` #1 <@!${document
+      .getElementById("firstplace")
+      .selectedOptions[0].getAttribute("data-userid")}>`;
   }
   if (button.id == "2nd") {
-    resultsBox.value += " #2 " + document.getElementById("secondplace").value;
+    resultsBox.value += ` #2 <@!${document
+      .getElementById("secondplace")
+      .selectedOptions[0].getAttribute("data-userid")}>`;
   }
   if (button.id == "3rd") {
-    resultsBox.value += " #3 " + document.getElementById("thirdplace").value;
+    resultsBox.value += " #3 " + document.getElementById("thirdplace").selectedOptions[0].getAttribute("data-userid");
   }
   if (button.id == "4th") {
-    resultsBox.value += " #4 " + document.getElementById("fourthplace").value;
+    resultsBox.value += " #4 " + document.getElementById("fourthplace").selectedOptions[0].getAttribute("data-userid");
   }
 }
 
@@ -91,7 +103,9 @@ function reset() {
   document.getElementById("results").value = "/game record game: MGSR 1v1 test result:";
 }
 
-//works on the leaderboard page, not actually this page.
+/* Function below works on the leaderboard page, not actually this page.
+I used it to get the list of users and IDs.
+
 function getUsers() {
   var leaderboard = await fetch("https://teamupdiscord.com/api/api", {
     credentials: "include",
@@ -114,3 +128,4 @@ function getUsers() {
   var namesArray = Object.entries(leaderboard[1]);
   namesArray.map((u, i) => [namesArray[i][0], namesArray[i][1].username]);
 }
+*/
