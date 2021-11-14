@@ -103,6 +103,21 @@ function reset() {
   document.getElementById("results").value = "/game record game: MGSR 1v1 test result:";
 }
 
+function copyClipboard() {
+  /* Get the text field */
+  var copyText = document.getElementById("results");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+  /* Copy the text inside the text field */
+  navigator.clipboard.writeText(copyText.value);
+
+  /* Alert the copied text */
+  //alert("Copied the text: " + copyText.value);
+}
+
 /* Function below works on the leaderboard page, not actually this page.
 I used it to get the list of users and IDs.
 
