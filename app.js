@@ -119,7 +119,7 @@ function copyClipboard() {
 }
 
 /* Function below works on the leaderboard page, not actually this page.
-I used it to get the list of users and IDs.
+I used it to get the list of users and IDs. It's more of a one-time thing.
 
 function getUsers() {
   var leaderboard = await fetch("https://teamupdiscord.com/api/api", {
