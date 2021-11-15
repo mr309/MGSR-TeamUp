@@ -27,6 +27,8 @@
         
         textarea {
             font: 400 14px/22px Google Sans Text,Arial,Helvetica,sans-serif;
+            width: 18em;
+            height: 6em;
         }
 
         button {
@@ -34,7 +36,7 @@
             background-color: #67a60c;
             border-radius: 6px;
             box-shadow: inset 0 0 3px 0 rgba(255,255,255,.4), inset 0 0 3px 0 rgba(0,0,0,.4), inset 0 0 1px 3px rgba(0,0,0,.05), 2px 2px 4px 0 rgba(0,0,0,.25);
-            padding: 2px 12px;
+            padding: .125em .5em;
             
         }
 
@@ -55,20 +57,31 @@
             border: .5em solid #e60012;
             padding: .5em;
             margin: .5em;
+            box-shadow: 0px 0px 2px 1px black;
         }
 
         h1 {
             font-weight: bolder;
-            -webkit-text-stroke-width: 1px;
-            -webkit-text-stroke-color: black;
+            /*-webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: black;*/
+            display: table;
+            font-size: 2em;
+            padding: 0;
+            margin: .125em;
+            line-height: 1em;
+            text-shadow: rgba(0,0,0,.05);
+            text-align: center;
+            text-shadow: 1px 1px 2px black;
         }
         
         h2 {
             color: black;
             font-weight: 800;
-            -webkit-text-stroke-width: 1px;
-            -webkit-text-stroke-color: black;
-            padding-left: 2em;
+            /*-webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: black;*/
+            padding-left: 0em;
+            text-align: center;
+            text-shadow: 1px 1px 1px black;
         }
 
     </style>
@@ -77,8 +90,8 @@
 <body>
     <main class="main">
     <div class="mario">
-        <h1>MARIO GOLF SUPER RUSH</h1> 
-        <h2>Team Up Bot Game Results</h2>
+        <h1>MARIO GOLF <span style="display: block;">SUPER RUSH</span></h1>
+        <h2>Team Up Bot <span style="display: block;">Game Results Tool</span></h2>
     </div>
     <div class="fairway">
        
@@ -112,7 +125,7 @@
     <div class="fairway">
         
             <label for="results">Results Command</label><br>
-            <textarea id="results" style="width: 300px">/game record game: MGSR 1v1 result:</textarea>
+            <textarea id="results">/game record game: MGSR 1v1 result:</textarea>
             <br>
         <button onclick="reset()">Reset</button>&nbsp;<button onclick="copyClipboard()">Copy to Clipboard</button>
     </div>
