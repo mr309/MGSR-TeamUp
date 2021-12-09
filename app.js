@@ -23,7 +23,7 @@ const players = [
 ];
 */
 
-const userIds = [
+/* const userIds = [
   ["178739102101929984", "Master Bates"],
   ["516493086524964866", "__Henry__"],
   ["749516708099784824", "DR"],
@@ -44,6 +44,102 @@ const userIds = [
   ["901349011095683092", "🐙MistahKush"],
   ["700822583351705640", "The Mario Odyssey"],
 ];
+*/
+
+const userIds = [
+  [
+    "147602825231335425",
+    "CAKE13"
+  ],
+  [
+    "749516708099784824",
+    "Goosebumps"
+  ],
+  [
+    "326008716484935692",
+    "Friskiest"
+  ],
+  [
+    "689663687694221358",
+    "manmaru"
+  ],
+  [
+    "161114714170982400",
+    "Mrs. Chippy"
+  ],
+  [
+    "906374386423066684",
+    "LeSinge"
+  ],
+  [
+    "412116606861312001",
+    "AlFritz"
+  ],
+  [
+    "450933963620352010",
+    "BerkutReaper"
+  ],
+  [
+    "94882879636504576",
+    "Nic_Dizzle"
+  ],
+  [
+    "149560980081344512",
+    "jrichgames"
+  ],
+  [
+    "150728328867872768",
+    "zetite"
+  ],
+  [
+    "799065911716741131",
+    "Mia🌻"
+  ],
+  [
+    "129102832019308544",
+    "Bluekandy"
+  ],
+  [
+    "210461076846936065",
+    "Blaxton"
+  ],
+  [
+    "172140080855646219",
+    "Note"
+  ],
+  [
+    "361224360893349890",
+    "The Milkman"
+  ],
+  [
+    "320052548557864960",
+    "dishnet34"
+  ],
+  [
+    "97452249470468096",
+    "Mick"
+  ],
+  [
+    "480296400408805388",
+    "Mitch"
+  ],
+  [
+    "788325569707245588",
+    "Stink Man"
+  ],
+  [
+    "578332642164867073",
+    "carterferris07"
+  ],
+  [
+    "600344944070230026",
+    "Ursi"
+  ],
+  [
+    "710503007074386062",
+    "🎄Apple🎄"
+  ]
+]
 
 // const list = document.querySelector("#players");
 const list = document.querySelectorAll("[name='playerlist']");
@@ -100,7 +196,7 @@ function AddResult(button) {
 function reset() {
   let fields = document.querySelectorAll("input");
   fields.forEach((e) => (e.value = ""));
-  document.getElementById("results").value = "/game record game: MGSR 1v1 result:";
+  document.getElementById("results").value = "/game record leaderboard: MGSR result:";
 }
 
 function copyClipboard() {
