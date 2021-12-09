@@ -1,51 +1,5 @@
-/*
-const players = [
-  "@mr309#3290",
-  "@__Henry__#9095",
-  "@Andrew-Morse#8509",
-  "@Master Bates#4935",
-  "@Goosebumps#8209",
-  "@igonnawrecku#1386",
-  "@InvinciBeard#3473",
-  "@leftytehllama#8951",
-  "@Me, Ed#3697",
-  "@Michael722#2048",
-  "@PatsWhatImTalkinAbout#2731",
-  "@strangemusic#5017",
-  "@Rabbit#5852",
-  "@Splash#0972",
-  "@The Mario Odyssey#6494",
-  "@🐙MistahKush#5119",
-  "@jrichgames#5710",
-  "@zetite#0422",
-  "@WoogieGeezer#9537",
-  "@Hamm#1714",
-];
-*/
 
-/* const userIds = [
-  ["178739102101929984", "Master Bates"],
-  ["516493086524964866", "__Henry__"],
-  ["749516708099784824", "DR"],
-  ["488098500765024263", "Me, Ed"],
-  ["142797219341402112", "Rabbit"],
-  ["230873770053730315", "leftytehllama"],
-  ["759971547141242933", "Michael722"],
-  ["871595637219659898", "Andrew-Morse"],
-  ["641510334515118082", "PatsWhatImTalkinAbout"],
-  ["130515887403958272", "Hamm"],
-  ["149560980081344512", "jrichgames"],
-  ["451829170092376067", "igonnawrecku"],
-  ["187245277076389888", "strangemusic"],
-  ["161114714170982400", "mr309"],
-  ["700821941724119062", "WoogieGeezer"],
-  ["150728328867872768", "zetite"],
-  ["268964485555945473", "Splash"],
-  ["901349011095683092", "🐙MistahKush"],
-  ["700822583351705640", "The Mario Odyssey"],
-];
-*/
-
+// List of users, which needs updating from time to time.
 const userIds = [
   [
     "147602825231335425",
@@ -167,10 +121,7 @@ userIds.forEach((item) => {
 // });
 
 // function results(r1, r2, r3, r4) {
-//   console.log(`/game record game: MGSR 1v1 result: #1 ${r1} #2 ${r2}`);
 // }
-
-// results(players[0], players[1]);
 
 function AddResult(button) {
   let resultsBox = document.getElementById("results");
@@ -240,102 +191,4 @@ async function getUsers() {
   var namesList = namesArray.map((u, i) => [namesArray[i][0], namesArray[i][1].username]);
 	console.log(namesList)
 }
-*/
-
-/*
-const userIds = [
-  [
-    "147602825231335425",
-    "CAKE13"
-  ],
-  [
-    "749516708099784824",
-    "Goosebumps"
-  ],
-  [
-    "326008716484935692",
-    "Friskiest"
-  ],
-  [
-    "689663687694221358",
-    "manmaru"
-  ],
-  [
-    "161114714170982400",
-    "Mrs. Chippy"
-  ],
-  [
-    "906374386423066684",
-    "LeSinge"
-  ],
-  [
-    "412116606861312001",
-    "AlFritz"
-  ],
-  [
-    "450933963620352010",
-    "BerkutReaper"
-  ],
-  [
-    "94882879636504576",
-    "Nic_Dizzle"
-  ],
-  [
-    "149560980081344512",
-    "jrichgames"
-  ],
-  [
-    "150728328867872768",
-    "zetite"
-  ],
-  [
-    "799065911716741131",
-    "Mia🌻"
-  ],
-  [
-    "129102832019308544",
-    "Bluekandy"
-  ],
-  [
-    "210461076846936065",
-    "Blaxton"
-  ],
-  [
-    "172140080855646219",
-    "Note"
-  ],
-  [
-    "361224360893349890",
-    "The Milkman"
-  ],
-  [
-    "320052548557864960",
-    "dishnet34"
-  ],
-  [
-    "97452249470468096",
-    "Mick"
-  ],
-  [
-    "480296400408805388",
-    "Mitch"
-  ],
-  [
-    "788325569707245588",
-    "Stink Man"
-  ],
-  [
-    "578332642164867073",
-    "carterferris07"
-  ],
-  [
-    "600344944070230026",
-    "Ursi"
-  ],
-  [
-    "710503007074386062",
-    "🎄Apple🎄"
-  ]
-]
-
 */
