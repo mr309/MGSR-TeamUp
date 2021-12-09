@@ -121,7 +121,7 @@ function copyClipboard() {
 /* Function below works on the leaderboard page, not actually this page.
 I used it to get the list of users and IDs. It's more of a one-time thing.
 
-function getUsers() {
+async function getUsers() {
   var leaderboard = await fetch("https://teamupdiscord.com/api/api", {
     credentials: "include",
     headers: {
@@ -133,14 +133,113 @@ function getUsers() {
       "Sec-Fetch-Mode": "cors",
       "Sec-Fetch-Site": "same-origin",
     },
-    referrer: "https://teamupdiscord.com/leaderboard/server/670656871434027049/game/bWdzciUyMDF2MQ==/versus/1v1",
-    body: '{"guildId":"670656871434027049","gameId":"mgsr 1v1","versus":"1v1","action":"leaderboardGuildGameVersus"}',
+    referrer: "https://teamupdiscord.com/leaderboard/server/812794920158363688/game/bWdzcg==/versus/1v1",
+    body: '{"guildId":"812794920158363688","gameId":"mgsr","versus":"1v1","action":"leaderboardGuildGameVersus"}',
     method: "POST",
     mode: "cors",
   })
     .then((response) => response.json())
     .then((data) => [data.leaderboard, data.playerNames]);
   var namesArray = Object.entries(leaderboard[1]);
-  namesArray.map((u, i) => [namesArray[i][0], namesArray[i][1].username]);
+  var namesList = namesArray.map((u, i) => [namesArray[i][0], namesArray[i][1].username]);
+	console.log(namesList)
 }
+*/
+
+/*
+const userIds = [
+  [
+    "147602825231335425",
+    "CAKE13"
+  ],
+  [
+    "749516708099784824",
+    "Goosebumps"
+  ],
+  [
+    "326008716484935692",
+    "Friskiest"
+  ],
+  [
+    "689663687694221358",
+    "manmaru"
+  ],
+  [
+    "161114714170982400",
+    "Mrs. Chippy"
+  ],
+  [
+    "906374386423066684",
+    "LeSinge"
+  ],
+  [
+    "412116606861312001",
+    "AlFritz"
+  ],
+  [
+    "450933963620352010",
+    "BerkutReaper"
+  ],
+  [
+    "94882879636504576",
+    "Nic_Dizzle"
+  ],
+  [
+    "149560980081344512",
+    "jrichgames"
+  ],
+  [
+    "150728328867872768",
+    "zetite"
+  ],
+  [
+    "799065911716741131",
+    "Mia🌻"
+  ],
+  [
+    "129102832019308544",
+    "Bluekandy"
+  ],
+  [
+    "210461076846936065",
+    "Blaxton"
+  ],
+  [
+    "172140080855646219",
+    "Note"
+  ],
+  [
+    "361224360893349890",
+    "The Milkman"
+  ],
+  [
+    "320052548557864960",
+    "dishnet34"
+  ],
+  [
+    "97452249470468096",
+    "Mick"
+  ],
+  [
+    "480296400408805388",
+    "Mitch"
+  ],
+  [
+    "788325569707245588",
+    "Stink Man"
+  ],
+  [
+    "578332642164867073",
+    "carterferris07"
+  ],
+  [
+    "600344944070230026",
+    "Ursi"
+  ],
+  [
+    "710503007074386062",
+    "🎄Apple🎄"
+  ]
+]
+
 */
