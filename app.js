@@ -1,6 +1,5 @@
 // List of users, which needs updating from time to time.
 const userIds = [
-  [
     [
       "749516708099784824",
       "Goosebumps"
