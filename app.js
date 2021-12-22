@@ -1,3 +1,24 @@
+const gameState = {
+  1: {
+    place: "",
+    user: "",
+  },
+  2: {
+    place: "",
+    user: "",
+  },
+  3: {
+    place: "",
+    user: "",
+  },
+  4: {
+    place: "",
+    user: "",
+  },
+};
+
+const defaultCommand = "/game record leaderboard: MGSR 1v1 result:";
+
 // List of users, which needs updating from time to time.
 const userIds = [
   ["749516708099784824", "Goosebumps"],
@@ -33,7 +54,6 @@ const userIds = [
   ["480296400408805388", "Mitch"],
 ];
 
-// const list = document.querySelector("#players");
 const list = document.querySelectorAll("[name='playerlist']");
 
 userIds.forEach((item) => {
@@ -81,6 +101,102 @@ function AddResult(button) {
     resultsBox.value += " #4 " + document.getElementById("fourthplace").selectedOptions[0].getAttribute("data-userid");
   }
 }
+
+function updateState() {
+  // Update global object with selected values
+  // let firstPlace = document.getElementById("placement1");
+  let places = [
+    document.getElementById("placement1"),
+    document.getElementById("placement2"),
+    document.getElementById("placement3"),
+    document.getElementById("placement4"),
+  ];
+  let users = [
+    places[0].nextElementSibling.selectedOptions[0].getAttribute("data-userid"),
+    places[1].nextElementSibling.selectedOptions[0].getAttribute("data-userid"),
+    places[2].nextElementSibling.selectedOptions[0].getAttribute("data-userid"),
+    places[3].nextElementSibling.selectedOptions[0].getAttribute("data-userid"),
+  ];
+  Object.assign(gameState, {
+    1: {
+      place: places[0].value,
+      user: users[0],
+    },
+    2: {
+      place: places[1].value,
+      user: users[1],
+    },
+    3: {
+      place: places[2].value,
+      user: users[2],
+    },
+    4: {
+      place: places[3].value,
+      user: users[3],
+    },
+  });
+  //need to add `<@!${ }>` around usernames, for proper command in Discord.
+}
+
+function ffaOutput(o) {
+  // Need to output the individual commands for each pairing
+  // For a 1,2,3,4 match, this would be 6 commands
+  // 1: 1v2, 1v3, 1v4; 2: 2v3, 2v4; 3: 3v4
+  // For a 1,2,3 (or 1,1,3), it would be 3 commands
+  // for a 1,2 (or 1,1), just 1 command
+  // Have to test for ties
+  let pairings = getPairings(o);
+  // let input = document.getElementById("results2");
+  let pairList = pairings.map((e) => {
+    // `${defaultCommand} #${e[0].place} <@!${e[0].user}> #${e[1].place} <@!${e[1].user}>`;
+    let f = document.createElement("input");
+    f.type = "text";
+    //f.style = "display: block; width: 32rem; margin: .2em";
+    f.setAttribute("class", "result");
+    f.value = `${defaultCommand} #${e[0].place} <@!${e[0].user}> #${e[1].place} <@!${e[1].user}>`;
+    document.getElementById("ResultsArea").appendChild(f);
+  });
+  //Trying to outut 6 different possible games for a FFA game
+  console.log(pairList);
+  pairList.forEach(
+    (e) => {
+      console.log(e);
+    }
+    /* if (e[0].place == e[1].place) {
+      f.value = `${defaultCommand} #1 <@!${e[0].user}> #1 <@!${e[1].user}>`;
+      document.getElementById("ResultsArea").appendChild(f);
+    } else {
+      f.value = `${defaultCommand} #1 <@!${e[0].user}> #2 <@!${e[1].user}>`;
+      document.getElementById("ResultsArea").appendChild(f);
+    } */
+  );
+}
+
+function checkForTies() {
+  let myData = Object.keys(gameState).map((key) => gameState[key]);
+  0;
+  let uniqueValues = new Set(myData.map((v) => v.place));
+
+  if (uniqueValues.size < myData.length) {
+    console.log("duplicates found");
+  }
+  console.log(myData);
+  console.log(uniqueValues);
+}
+
+function getPairings(o) {
+  return [
+    [o[1], o[2]],
+    [o[1], o[3]],
+    [o[1], o[4]],
+    [o[2], o[3]],
+    [o[2], o[4]],
+    [o[3], o[4]],
+  ];
+}
+
+// Build each pairing to output as a string, then paste into Discord.
+let pairings = getPairings(gameState);
 
 function reset() {
   let fields = document.querySelectorAll("input");
