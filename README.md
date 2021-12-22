@@ -1,6 +1,6 @@
 # MGSR-TeamUp
 
-[https://mr309.github.io/MGSR-TeamUp/](https://mr309.github.io/MGSR-TeamUp/)
+[https://mr309.github.io/MGSR-TeamUp/mgsr/](https://mr309.github.io/MGSR-TeamUp/)
 
 For use in the Mario Golf Super Rush Discord server, to record ranked games with the Team Up bot.
 
