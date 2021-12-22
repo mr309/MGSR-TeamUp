@@ -192,6 +192,7 @@ userIds.sort(function(x, y) {
   }
   return 0;
 });
+userIds.push(["tag this person directly in Discord", "(Unlisted User)"]);
 
 const list = document.querySelectorAll("[name='playerlist']");
 
@@ -276,6 +277,8 @@ function renderCommands(state) {
       // Only include results in output if it is for a valid pairing
       // Which means, the pairing has a place and user selected
 
+      const commandID = p1.userID + "_" + p2.userID;
+
       let p1BotPlace = "1";
       let p2BotPlace = "2";
       if (p1.place == p2.place) {
@@ -283,7 +286,8 @@ function renderCommands(state) {
       }
 
       hasEnoughSelections = true;
-      let resultDesc = document.createElement("div");
+      let resultHeader = document.createElement("div");
+      let resultDesc = document.createElement("span");
       resultDesc.style = "font-size: 0.75em; font-weight: bold;";
       resultDesc.innerHTML =
         p1.place
@@ -298,13 +302,20 @@ function renderCommands(state) {
         + p2.userName
         + ")"
       ;
-      document.getElementById("MultiResultsArea").appendChild(resultDesc);
+      let copyButton = document.createElement("button");
+      copyButton.setAttribute("onclick", "copyClipboard('" + commandID + "')");
+      copyButton.style = "margin-left: 4px;";
+      copyButton.innerHTML = "Copy";
+      resultHeader.appendChild(resultDesc);
+      resultHeader.appendChild(copyButton);
+      document.getElementById("MultiResultsArea").appendChild(resultHeader);
 
-      let resultCommand = document.createElement("div");
+      let resultCommand = document.createElement("input");
+      resultCommand.setAttribute("id", commandID);
       resultCommand.setAttribute("class", "command");
       //need to add `<@!${ }>` around usernames, for proper command in Discord.
       const matchResultSyntax = ` #${p1BotPlace} <@!${p1.userID}> #${p2BotPlace} <@!${p2.userID}>`;
-      resultCommand.innerHTML = defaultCommand + matchResultSyntax;
+      resultCommand.value = defaultCommand + matchResultSyntax;
       document.getElementById("MultiResultsArea").appendChild(resultCommand);
     }
   });
@@ -360,19 +371,15 @@ function normalizeNameForComparison(userName) {
 // Build each pairing to output as a string, then paste into Discord.
 let pairings = getPairings(gameState);
 
-function copyClipboard() {
-  /* Get the text field */
-  var copyText = document.getElementById("results");
+function copyClipboard(elementID) {
+  var copyText = document.getElementById(elementID);
 
-  /* Select the text field */
+  /* Select the text inside that element */
   copyText.select();
   copyText.setSelectionRange(0, 99999); /* For mobile devices */
 
   /* Copy the text inside the text field */
   navigator.clipboard.writeText(copyText.value);
-
-  /* Alert the copied text */
-  //alert("Copied the text: " + copyText.value);
 }
 
 /* Function below works on the leaderboard page, not actually this page.
