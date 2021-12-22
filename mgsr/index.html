@@ -27,7 +27,7 @@
         
         textarea {
             font: 400 14px/22px Google Sans Text,Arial,Helvetica,sans-serif;
-            width: 18em;
+            width: 30vw;
             height: 6em;
         }
 
@@ -84,6 +84,22 @@
             text-shadow: 1px 1px 1px black;
         }
 
+        .place {
+            width: 2.4em;
+        }
+
+        .result {
+            display: block;
+            width: 32rem
+        }
+        .command {
+            background-color: #FFFFFF;
+            border: 1px solid gray;
+            font-family: monospace;
+            font-size: 0.75em;
+            margin-bottom: 10px;
+        }
+
     </style>
 </head>
 
@@ -93,45 +109,57 @@
         <h1>MARIO GOLF SUPER RUSH</h1>
         <h2>Team Up Bot Game Results Tool</h2>
     </div>
-    <div class="fairway">
-       
-        <label for="playerlist">First Place</label>
-        <br>
-        <select name="playerlist" list="players" id="firstplace">
-            <option label=" "></option>
-        </select>
-            <button id="1st" onclick="AddResult(this)">Add</button>
-        <br>
-        <label for="playerlist">Second Place</label><br>
-        <select name="playerlist" list="players" id="secondplace">
-            <option label=" "></option>
-        </select>
-            <button id="2nd" onclick="AddResult(this)">Add</button>
-        <br>
-        <p style="display: none">
-        <label for="playerlist">Third Place</label><br>
-        <select name="playerlist" list="players" id="thirdplace">
-            <option label=" "></option>
-        </select>
-            <button id="3rd" onclick="AddResult(this)">Add</button>  
-        <br>
-        <label for="playerlist">Fourth Place</label><br>
-        <select name="playerlist" list="players" id="fourthplace">
-            <option label=" "></option>
-        </select>
-            <button id="4th" onclick="AddResult(this)">Add</button>
-        </p>  
-    </div>
-    <div class="fairway">
-        
-            <label for="results">Results Command</label><br>
-            <textarea id="results">/game record leaderboard: MGSR result:</textarea>
+    <form id="mainform" class="fairway" onsubmit="return false;">
+        <div id="1" onchange="updateState()">
+        <label for="placement">Place:</label>
+            <input class="place" type="number" min="1" max="4" value="" id="placement1" list="placements">
+                <select  name="playerlist" list="players" id="firstplace">
+                    <option value="none" selected disabled hidden>Select a player</option>
+                </select>
+        </div>
             <br>
-        <button onclick="reset()">Reset</button>&nbsp;<button onclick="copyClipboard()">Copy to Clipboard</button>
+        <div id="2" onchange="updateState()">
+        <label for="placement">Place:</label>
+            <input class="place" type="number" min="1" max="4" value="" id="placement2" list="placements">
+                <select  name="playerlist" list="players" id="secondplace">
+                    <option value="none" selected disabled hidden>Select a player</option>
+                </select>
+        </div>
+            <br>
+        <div id="3" onchange="updateState()">
+        <label for="placement">Place:</label>
+            <input class="place" type="number" min="1" max="4" value="" id="placement3" list="placements">
+                <select  name="playerlist" list="players" id="thirdplace">
+                    <option value="none" selected disabled hidden>(None)</option>
+                </select>
+        </div>
+            <br>
+        <div id="4" onchange="updateState()">
+        <label for="placement">Place:</label>
+            <input id="placement4" class="place" type="number" min="1" max="4" value="" list="placements">
+                <select  name="playerlist" list="players" id="fourthplace">
+                    <option value="none" selected disabled hidden>(None)</option>
+                </select>
+        </div>
+        
+        <datalist id="placements">
+          <option value="1">
+          <option value="2">
+          <option value="3">
+          <option value="4">
+        </datalist>
+
+    </form>
+    <p>
+        <button id="ffa" onclick="ffaOutput(gameState)">Output FFA</button>
+    </p>
+
+    <div id="MultiResultsArea" class="fairway">
+      Please select placements and participants above
     </div>
-    
-    
+
     </main>
+    
     <script src="app.js"></script>
 </body>
 
