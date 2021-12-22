@@ -92,6 +92,13 @@
             display: block;
             width: 32rem
         }
+        .command {
+            background-color: #FFFFFF;
+            border: 1px solid gray;
+            font-family: monospace;
+            font-size: 0.75em;
+            margin-bottom: 10px;
+        }
 
     </style>
 </head>
@@ -146,12 +153,12 @@
     <p>
         <button id="ffa" onclick="ffaOutput(gameState)">Output FFA</button>
     </p>
-    <div id="ResultsArea" class="fairway">
-        <button onclick="copyClipboard()">Copy to Clipboard</button>
+
+    <div id="MultiResultsArea" class="fairway">
+      Please select placements and participants above
     </div>
 
     </main>
-
     
     <script src="app.js"></script>
 </body>

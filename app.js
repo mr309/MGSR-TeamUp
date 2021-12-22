@@ -1,23 +1,27 @@
 const gameState = {
   1: {
     place: "",
-    user: "",
+    userID: "",
+    userName: "",
   },
   2: {
     place: "",
-    user: "",
+    userID: "",
+    userName: "",
   },
   3: {
     place: "",
-    user: "",
+    userID: "",
+    userName: "",
   },
   4: {
     place: "",
-    user: "",
+    userID: "",
+    userName: "",
   },
 };
 
-const defaultCommand = "/game record leaderboard: MGSR 1v1 result:";
+const defaultCommand = "/game record leaderboard: MGSR result:";
 
 // List of users, which needs updating from time to time.
 const userIds = [
@@ -200,28 +204,38 @@ function updateState() {
     document.getElementById("placement3"),
     document.getElementById("placement4"),
   ];
-  let users = [
+  let userIDs = [
     places[0].nextElementSibling.selectedOptions[0].getAttribute("data-userid"),
     places[1].nextElementSibling.selectedOptions[0].getAttribute("data-userid"),
     places[2].nextElementSibling.selectedOptions[0].getAttribute("data-userid"),
     places[3].nextElementSibling.selectedOptions[0].getAttribute("data-userid"),
   ];
+  let userNames = [
+    places[0].nextElementSibling.selectedOptions[0].value,
+    places[1].nextElementSibling.selectedOptions[0].value,
+    places[2].nextElementSibling.selectedOptions[0].value,
+    places[3].nextElementSibling.selectedOptions[0].value,
+  ];
   Object.assign(gameState, {
     1: {
       place: places[0].value,
-      user: users[0],
+      userID: userIDs[0],
+      userName: userNames[0],
     },
     2: {
       place: places[1].value,
-      user: users[1],
+      userID: userIDs[1],
+      userName: userNames[1],
     },
     3: {
       place: places[2].value,
-      user: users[2],
+      userID: userIDs[2],
+      userName: userNames[2],
     },
     4: {
       place: places[3].value,
-      user: users[3],
+      userID: userIDs[3],
+      userName: userNames[3],
     },
   });
 }
@@ -234,7 +248,7 @@ function ffaOutput(o) {
   // for a 1,2 (or 1,1), just 1 command
 
   // First, clear any existing elements produced on a previous click
-  document.getElementById("ResultsArea").innerHTML = "";
+  document.getElementById("MultiResultsArea").innerHTML = "";
 
   console.log(JSON.stringify(o));
   let pairings = getPairings(o);
@@ -242,18 +256,14 @@ function ffaOutput(o) {
   let pairList = pairings.map((e) => {
     const p1 = e[0];
     const p2 = e[1];
-    if (p1.place != '' &&  p1.user != null && p2.place != '' && p2.user != null) {
+    if (p1.place != '' &&  p1.userID != null && p2.place != '' && p2.userID != null) {
       // Only include results in output if it is for a valid pairing
       // Which means, the pairing has a place and user selected
 
-      let p1Place = "1";
-      let p2Place = "2";
+      let p1BotPlace = "1";
+      let p2BotPlace = "2";
       if (p1.place == p2.place) {
-        p2Place = "1";
-      }
-      else if (p2.place < p1.place) {
-        p2Place = "1";
-        p1Place = "2";
+        p2BotPlace = "1";
       }
 
       let f = document.createElement("input");
@@ -261,10 +271,31 @@ function ffaOutput(o) {
       //f.style = "display: block; width: 32rem; margin: .2em";
       f.setAttribute("class", "result");
 
-      //need to add `<@!${ }>` around usernames, for proper command in Discord.
-      f.value = `${defaultCommand} #${p1Place} <@!${p1.user}> #${p2Place} <@!${p2.user}>`;
+      f.value = `${defaultCommand} #${p1BotPlace} <@!${p1.userID}> #${p2BotPlace} <@!${p2.userID}>`;
 
-      document.getElementById("ResultsArea").appendChild(f);
+      let resultDesc = document.createElement("div");
+      resultDesc.style = "font-size: 0.75em; font-weight: bold;";
+      resultDesc.innerHTML =
+        p1.place
+        + getPlaceSuffix(p1.place)
+        + " ("
+        + p1.userName
+        + ")"
+        + (p1BotPlace == p2BotPlace ? " ties " : " defeats ")
+        + p2.place
+        + getPlaceSuffix(p2.place)
+        + " ("
+        + p2.userName
+        + ")"
+      ;
+      document.getElementById("MultiResultsArea").appendChild(resultDesc);
+
+      let resultCommand = document.createElement("div");
+      resultCommand.setAttribute("class", "command");
+      //need to add `<@!${ }>` around usernames, for proper command in Discord.
+      const matchResultSyntax = ` #${p1BotPlace} <@!${p1.userID}> #${p2BotPlace} <@!${p2.userID}>`;
+      resultCommand.innerHTML = defaultCommand + matchResultSyntax;
+      document.getElementById("MultiResultsArea").appendChild(resultCommand);
     }
   });
 }
@@ -290,6 +321,19 @@ function getPairings(o) {
     [o[2], o[4]],
     [o[3], o[4]],
   ];
+}
+
+function getPlaceSuffix(placeNumber) {
+  if (placeNumber == "1") {
+    return "st";
+  }
+  if (placeNumber == "2") {
+    return "nd";
+  }
+  if (placeNumber == "3") {
+    return "rd";
+  }
+  return "th";
 }
 
 // Build each pairing to output as a string, then paste into Discord.
