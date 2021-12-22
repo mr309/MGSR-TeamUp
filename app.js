@@ -42,7 +42,7 @@ const userIds = [
   ["904871547704070144", "Orangebird"],
   ["618908576492027914", "Shmumbz"],
   ["480296400408805388", "Mitch"],
-  ];
+];
 
 // const list = document.querySelector("#players");
 const list = document.querySelectorAll("[name='playerlist']");
@@ -116,4 +116,4 @@ function copyClipboard() {
 
 /* Function below works on the leaderboard page, not actually this page.
 I used it to get the list of users and IDs. It's more of a one-time thing.
-
+*/
