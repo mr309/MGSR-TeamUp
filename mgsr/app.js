@@ -25,162 +25,55 @@ const defaultCommand = "/game record leaderboard: MGSR result:";
 
 // List of users, which needs updating from time to time.
 const userIds = [
-    [
-      "749516708099784824",
-      "Goosebumps"
-    ],
-    [
-      "807995974735364097",
-      "Rohanisya"
-    ],
-    [
-      "906374386423066684",
-      "LeSinge"
-    ],
-    [
-      "326008716484935692",
-      "Friskiest"
-    ],
-    [
-      "147602825231335425",
-      "CAKE13"
-    ],
-    [
-      "700821941724119062",
-      "WoogieGeezer"
-    ],
-    [
-      "871595637219659898",
-      "Andrew-Morse"
-    ],
-    [
-      "161114714170982400",
-      "Mrs. Chippy"
-    ],
-    [
-      "412116606861312001",
-      "AlFritz"
-    ],
-    [
-      "516493086524964866",
-      "__Henry__"
-    ],
-    [
-      "689663687694221358",
-      "manmaru"
-    ],
-    [
-      "751042478408335371",
-      "An average gamer"
-    ],
-    [
-      "108715289994096640",
-      "Kenryu"
-    ],
-    [
-      "483856524783910917",
-      "capo_r420"
-    ],
-    [
-      "799065911716741131",
-      "Mia🌻"
-    ],
-    [
-      "129102832019308544",
-      "Bluekandy"
-    ],
-    [
-      "172140080855646219",
-      "Note"
-    ],
-    [
-      "210461076846936065",
-      "Blaxton"
-    ],
-    [
-      "361224360893349890",
-      "The Milkman"
-    ],
-    [
-      "450933963620352010",
-      "BerkutReaper"
-    ],
-    [
-      "310846363443134465",
-      "jawthumb"
-    ],
-    [
-      "774417504889733170",
-      "Dream Master"
-    ],
-    [
-      "187398415812919296",
-      "Dank Vegetables"
-    ],
-    [
-      "918598727336345681",
-      "McClary"
-    ],
-    [
-      "440226012370960423",
-      "Eristoff 🇫🇷"
-    ],
-    [
-      "901349011095683092",
-      "🐙MistahKush"
-    ],
-    [
-      "97452249470468096",
-      "Mick"
-    ],
-    [
-      "320052548557864960",
-      "dishnet34"
-    ],
-    [
-      "920764241886195764",
-      "E-tan"
-    ],
-    [
-      "788325569707245588",
-      "Stink Man"
-    ],
-    [
-      "276134695870267392",
-      "Lheticus"
-    ],
-    [
-      "618908576492027914",
-      "Shmumbz"
-    ],
-    [
-      "600344944070230026",
-      "Ursi"
-    ],
-    [
-      "578332642164867073",
-      "carterferris07"
-    ],
-    [
-      "710503007074386062",
-      "🎄Apple🎄"
-    ],
-    [
-      "525560136811675650",
-      "ChunkyChango"
-    ],
-    [
-      "904871547704070144",
-      "Orangebird"
-    ],
-    [
-      "480296400408805388",
-      "Mitch"
-    ]
-  ];
+  ["516493086524964866", "__Henry__"],
+  ["807995974735364097", "Rohanisya"],
+  ["749516708099784824", "Goosebumps"],
+  ["906374386423066684", "LeSinge"],
+  ["326008716484935692", "Friskiest"],
+  ["871595637219659898", "Andrew-Morse"],
+  ["700821941724119062", "WoogieGeezer"],
+  ["147602825231335425", "CAKE13"],
+  ["689663687694221358", "manmaru"],
+  ["161114714170982400", "Mrs. Chippy"],
+  ["412116606861312001", "AlFritz"],
+  ["440226012370960423", "Eristoff 🇫🇷"],
+  ["150728328867872768", "zetite"],
+  ["751042478408335371", "An average gamer"],
+  ["108715289994096640", "Kenryu"],
+  ["483856524783910917", "capo_r420"],
+  ["513925859694870548", "Manic"],
+  ["799065911716741131", "Mia🌻"],
+  ["337749548485181441", "titandude21"],
+  ["129102832019308544", "Bluekandy"],
+  ["172140080855646219", "Note"],
+  ["210461076846936065", "Blaxton"],
+  ["310846363443134465", "jawthumb"],
+  ["361224360893349890", "The Milkman"],
+  ["450933963620352010", "BerkutReaper"],
+  ["519333443218440222", "chexmix"],
+  ["187398415812919296", "Dank Vegetables"],
+  ["918598727336345681", "McClary"],
+  ["343927790078525440", "lteinhorn"],
+  ["97452249470468096", "Mick"],
+  ["299764226745171969", "DBSssss"],
+  ["320052548557864960", "dishnet34"],
+  ["182130393242271744", "MegaMeerkat"],
+  ["788325569707245588", "Stink Man"],
+  ["578332642164867073", "carterferris07"],
+  ["920764241886195764", "E-tan"],
+  ["276134695870267392", "Lheticus"],
+  ["774417504889733170", "Dream Master"],
+  ["600344944070230026", "Ursi"],
+  ["901349011095683092", "🐙MistahKush"],
+  ["710503007074386062", "🎄Apple🎄"],
+  ["525560136811675650", "ChunkyChango"],
+  ["904871547704070144", "Orangebird"],
+  ["618908576492027914", "Shmumbz"],
+  ["480296400408805388", "Mitch"],
+];
 
 // Sorts the user IDs by a custom function looking at the names
-userIds.sort(function(x, y) {
+userIds.sort(function (x, y) {
   n1 = normalizeNameForComparison(x[1]);
   n2 = normalizeNameForComparison(y[1]);
 
@@ -272,7 +165,7 @@ function renderCommands(state) {
   let pairList = pairings.map((e) => {
     const p1 = e[0];
     const p2 = e[1];
-    if (p1.place != '' &&  p1.userID != null && p2.place != '' && p2.userID != null) {
+    if (p1.place != "" && p1.userID != null && p2.place != "" && p2.userID != null) {
       // Only include results in output if it is for a valid pairing
       // Which means, the pairing has a place and user selected
 
@@ -289,18 +182,17 @@ function renderCommands(state) {
       let resultDesc = document.createElement("span");
       resultDesc.style = "font-size: 0.75em; font-weight: bold;";
       resultDesc.innerHTML =
-        p1.place
-        + getPlaceSuffix(p1.place)
-        + " ("
-        + p1.userName
-        + ")"
-        + (p1BotPlace == p2BotPlace ? " ties " : " defeats ")
-        + p2.place
-        + getPlaceSuffix(p2.place)
-        + " ("
-        + p2.userName
-        + ")"
-      ;
+        p1.place +
+        getPlaceSuffix(p1.place) +
+        " (" +
+        p1.userName +
+        ")" +
+        (p1BotPlace == p2BotPlace ? " ties " : " defeats ") +
+        p2.place +
+        getPlaceSuffix(p2.place) +
+        " (" +
+        p2.userName +
+        ")";
       let copyButton = document.createElement("button");
       copyButton.setAttribute("onclick", "copyClipboard('" + commandID + "')");
       copyButton.style = "margin-left: 4px;";
@@ -320,7 +212,8 @@ function renderCommands(state) {
   });
 
   if (!hasEnoughSelections) {
-    document.getElementById("MultiResultsArea").innerHTML = 'Please select at least two placements and participants above';
+    document.getElementById("MultiResultsArea").innerHTML =
+      "Please select at least two placements and participants above";
   }
 }
 
@@ -352,7 +245,7 @@ function normalizeNameForComparison(userName) {
   // Removes all chars from strings except primary letters and numbers
   // This allows sorting to work with logically with names starting with either emoji or punctuation
   // See this for more: https://stackoverflow.com/questions/10992921/how-to-remove-emoji-code-using-javascript
-  return userName.replace(/[^\p{L}\p{N}\^$\n]/gu, '').toLowerCase();
+  return userName.replace(/[^\p{L}\p{N}\^$\n]/gu, "").toLowerCase();
 }
 
 // Build each pairing to output as a string, then paste into Discord.
