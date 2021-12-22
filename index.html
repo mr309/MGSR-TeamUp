@@ -109,7 +109,6 @@
                 <select  name="playerlist" list="players" id="firstplace">
                     <option value="none" selected disabled hidden>Select a player</option>
                 </select>
-            <button id="1st" onclick="AddResult(this)">Add</button>
         </div>
             <br>
         <div id="2" onchange="updateState()">
@@ -118,25 +117,22 @@
                 <select  name="playerlist" list="players" id="secondplace">
                     <option value="none" selected disabled hidden>Select a player</option>
                 </select>
-            <button id="2nd" onclick="AddResult(this)">Add</button>
         </div>
             <br>
         <div id="3" onchange="updateState()">
         <label for="placement">Place:</label>
             <input class="place" type="number" min="1" max="4" value="" id="placement3" list="placements">
                 <select  name="playerlist" list="players" id="thirdplace">
-                    <option value="none" selected disabled hidden>Select a player</option>
+                    <option value="none" selected disabled hidden>(None)</option>
                 </select>
-            <button id="3rd" onclick="AddResult(this)">Add</button>  
         </div>
             <br>
         <div id="4" onchange="updateState()">
         <label for="placement">Place:</label>
             <input id="placement4" class="place" type="number" min="1" max="4" value="" list="placements">
                 <select  name="playerlist" list="players" id="fourthplace">
-                    <option value="none" selected disabled hidden>Select a player</option>
+                    <option value="none" selected disabled hidden>(None)</option>
                 </select>
-            <button id="4th" onclick="AddResult(this)">Add</button>
         </div>
         
         <datalist id="placements">
@@ -152,9 +148,6 @@
     </p>
     <div id="ResultsArea" class="fairway">
         
-            <label for="results">Results Command</label><br>
-            <textarea id="results">/game record leaderboard: MGSR 1v1 result:</textarea>
-            <br>
         <button onclick="reset()">Reset</button>&nbsp;<button onclick="copyClipboard()">Copy to Clipboard</button>
     </div>
 

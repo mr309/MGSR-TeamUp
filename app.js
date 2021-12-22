@@ -191,38 +191,6 @@ userIds.forEach((item) => {
   list[3].appendChild(option4);
 });
 
-// players.forEach((item) => {
-//   let option = document.createElement("option");
-//   option.value = item;
-//   //list.forEach((e) => {
-//   list.appendChild(option);
-//   //});
-// });
-
-// function results(r1, r2, r3, r4) {
-// }
-
-function AddResult(button) {
-  let resultsBox = document.getElementById("results");
-
-  if (button.id == "1st") {
-    resultsBox.value += ` #1 <@!${document
-      .getElementById("firstplace")
-      .selectedOptions[0].getAttribute("data-userid")}>`;
-  }
-  if (button.id == "2nd") {
-    resultsBox.value += ` #2 <@!${document
-      .getElementById("secondplace")
-      .selectedOptions[0].getAttribute("data-userid")}>`;
-  }
-  if (button.id == "3rd") {
-    resultsBox.value += " #3 " + document.getElementById("thirdplace").selectedOptions[0].getAttribute("data-userid");
-  }
-  if (button.id == "4th") {
-    resultsBox.value += " #4 " + document.getElementById("fourthplace").selectedOptions[0].getAttribute("data-userid");
-  }
-}
-
 function updateState() {
   // Update global object with selected values
   // let firstPlace = document.getElementById("placement1");
