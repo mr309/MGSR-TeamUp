@@ -238,9 +238,11 @@ function updateState() {
       userName: userNames[3],
     },
   });
+
+  renderCommands(gameState);
 }
 
-function ffaOutput(o) {
+function renderCommands(state) {
   // Need to output the individual commands for each pairing
   // For a 1,2,3,4 match, this would be 6 commands
   // 1: 1v2, 1v3, 1v4; 2: 2v3, 2v4; 3: 3v4
@@ -250,9 +252,9 @@ function ffaOutput(o) {
   // First, clear any existing elements produced on a previous click
   document.getElementById("MultiResultsArea").innerHTML = "";
 
-  console.log(JSON.stringify(o));
-  let pairings = getPairings(o);
-  // let input = document.getElementById("results2");
+  console.log(JSON.stringify(state));
+  let pairings = getPairings(state);
+  let hasEnoughSelections = false;
   let pairList = pairings.map((e) => {
     const p1 = e[0];
     const p2 = e[1];
@@ -266,13 +268,7 @@ function ffaOutput(o) {
         p2BotPlace = "1";
       }
 
-      let f = document.createElement("input");
-      f.type = "text";
-      //f.style = "display: block; width: 32rem; margin: .2em";
-      f.setAttribute("class", "result");
-
-      f.value = `${defaultCommand} #${p1BotPlace} <@!${p1.userID}> #${p2BotPlace} <@!${p2.userID}>`;
-
+      hasEnoughSelections = true;
       let resultDesc = document.createElement("div");
       resultDesc.style = "font-size: 0.75em; font-weight: bold;";
       resultDesc.innerHTML =
@@ -298,6 +294,10 @@ function ffaOutput(o) {
       document.getElementById("MultiResultsArea").appendChild(resultCommand);
     }
   });
+
+  if (!hasEnoughSelections) {
+    document.getElementById("MultiResultsArea").innerHTML = 'Please select at least two placements and participants above';
+  }
 }
 
 function checkForTies() {
