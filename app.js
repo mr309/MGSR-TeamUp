@@ -224,7 +224,6 @@ function updateState() {
       user: users[3],
     },
   });
-  //need to add `<@!${ }>` around usernames, for proper command in Discord.
 }
 
 function ffaOutput(o) {
@@ -234,31 +233,26 @@ function ffaOutput(o) {
   // For a 1,2,3 (or 1,1,3), it would be 3 commands
   // for a 1,2 (or 1,1), just 1 command
   // Have to test for ties
+  console.log(JSON.stringify(o));
   let pairings = getPairings(o);
   // let input = document.getElementById("results2");
   let pairList = pairings.map((e) => {
-    // `${defaultCommand} #${e[0].place} <@!${e[0].user}> #${e[1].place} <@!${e[1].user}>`;
+    const p1 = e[0];
+    const p2 = e[1];
     let f = document.createElement("input");
     f.type = "text";
     //f.style = "display: block; width: 32rem; margin: .2em";
     f.setAttribute("class", "result");
-    f.value = `${defaultCommand} #${e[0].place} <@!${e[0].user}> #${e[1].place} <@!${e[1].user}>`;
-    document.getElementById("ResultsArea").appendChild(f);
-  });
-  //Trying to outut 6 different possible games for a FFA game
-  console.log(pairList);
-  pairList.forEach(
-    (e) => {
-      console.log(e);
+
+    //need to add `<@!${ }>` around usernames, for proper command in Discord.
+    f.value = `${defaultCommand} #${p1.place} <@!${p1.user}> #${p2.place} <@!${p2.user}>`;
+
+    if (p1.place != '' &&  p1.user != null && p2.place != '' && p2.user != null) {
+      // Only include results in output if it is for a valid pairing
+      // Which means, the pairing has a place and user selected
+      document.getElementById("ResultsArea").appendChild(f);
     }
-    /* if (e[0].place == e[1].place) {
-      f.value = `${defaultCommand} #1 <@!${e[0].user}> #1 <@!${e[1].user}>`;
-      document.getElementById("ResultsArea").appendChild(f);
-    } else {
-      f.value = `${defaultCommand} #1 <@!${e[0].user}> #2 <@!${e[1].user}>`;
-      document.getElementById("ResultsArea").appendChild(f);
-    } */
-  );
+  });
 }
 
 function checkForTies() {
