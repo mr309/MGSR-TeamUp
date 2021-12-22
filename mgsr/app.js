@@ -179,6 +179,20 @@ const userIds = [
     ]
   ];
 
+// Sorts the user IDs by a custom function looking at the names
+userIds.sort(function(x, y) {
+  n1 = normalizeNameForComparison(x[1]);
+  n2 = normalizeNameForComparison(y[1]);
+
+  if (n1 > n2) {
+    return 1;
+  }
+  if (n1 < n2) {
+    return -1;
+  }
+  return 0;
+});
+
 const list = document.querySelectorAll("[name='playerlist']");
 
 userIds.forEach((item) => {
@@ -334,6 +348,13 @@ function getPlaceSuffix(placeNumber) {
     return "rd";
   }
   return "th";
+}
+
+function normalizeNameForComparison(userName) {
+  // Removes all chars from strings except primary letters and numbers
+  // This allows sorting to work with logically with names starting with either emoji or punctuation
+  // See this for more: https://stackoverflow.com/questions/10992921/how-to-remove-emoji-code-using-javascript
+  return userName.replace(/[^\p{L}\p{N}\^$\n]/gu, '').toLowerCase();
 }
 
 // Build each pairing to output as a string, then paste into Discord.
