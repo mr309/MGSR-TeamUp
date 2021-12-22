@@ -232,24 +232,38 @@ function ffaOutput(o) {
   // 1: 1v2, 1v3, 1v4; 2: 2v3, 2v4; 3: 3v4
   // For a 1,2,3 (or 1,1,3), it would be 3 commands
   // for a 1,2 (or 1,1), just 1 command
-  // Have to test for ties
+
+  // First, clear any existing elements produced on a previous click
+  document.getElementById("ResultsArea").innerHTML = "";
+
   console.log(JSON.stringify(o));
   let pairings = getPairings(o);
   // let input = document.getElementById("results2");
   let pairList = pairings.map((e) => {
     const p1 = e[0];
     const p2 = e[1];
-    let f = document.createElement("input");
-    f.type = "text";
-    //f.style = "display: block; width: 32rem; margin: .2em";
-    f.setAttribute("class", "result");
-
-    //need to add `<@!${ }>` around usernames, for proper command in Discord.
-    f.value = `${defaultCommand} #${p1.place} <@!${p1.user}> #${p2.place} <@!${p2.user}>`;
-
     if (p1.place != '' &&  p1.user != null && p2.place != '' && p2.user != null) {
       // Only include results in output if it is for a valid pairing
       // Which means, the pairing has a place and user selected
+
+      let p1Place = "1";
+      let p2Place = "2";
+      if (p1.place == p2.place) {
+        p2Place = "1";
+      }
+      else if (p2.place < p1.place) {
+        p2Place = "1";
+        p1Place = "2";
+      }
+
+      let f = document.createElement("input");
+      f.type = "text";
+      //f.style = "display: block; width: 32rem; margin: .2em";
+      f.setAttribute("class", "result");
+
+      //need to add `<@!${ }>` around usernames, for proper command in Discord.
+      f.value = `${defaultCommand} #${p1Place} <@!${p1.user}> #${p2Place} <@!${p2.user}>`;
+
       document.getElementById("ResultsArea").appendChild(f);
     }
   });
@@ -280,12 +294,6 @@ function getPairings(o) {
 
 // Build each pairing to output as a string, then paste into Discord.
 let pairings = getPairings(gameState);
-
-function reset() {
-  let fields = document.querySelectorAll("input");
-  fields.forEach((e) => (e.value = ""));
-  document.getElementById("results").value = "/game record leaderboard: MGSR result:";
-}
 
 function copyClipboard() {
   /* Get the text field */
