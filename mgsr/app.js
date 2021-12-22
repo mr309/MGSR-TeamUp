@@ -267,7 +267,6 @@ function renderCommands(state) {
   // First, clear any existing elements produced on a previous click
   document.getElementById("MultiResultsArea").innerHTML = "";
 
-  console.log(JSON.stringify(state));
   let pairings = getPairings(state);
   let hasEnoughSelections = false;
   let pairList = pairings.map((e) => {
@@ -323,18 +322,6 @@ function renderCommands(state) {
   if (!hasEnoughSelections) {
     document.getElementById("MultiResultsArea").innerHTML = 'Please select at least two placements and participants above';
   }
-}
-
-function checkForTies() {
-  let myData = Object.keys(gameState).map((key) => gameState[key]);
-  0;
-  let uniqueValues = new Set(myData.map((v) => v.place));
-
-  if (uniqueValues.size < myData.length) {
-    console.log("duplicates found");
-  }
-  console.log(myData);
-  console.log(uniqueValues);
 }
 
 function getPairings(o) {
