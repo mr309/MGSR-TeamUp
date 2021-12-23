@@ -110,34 +110,57 @@
     <form id="mainform" class="fairway" onsubmit="return false;">
         <div id="1" onchange="updateState()">
         <label for="placement">Place:</label>
-            <input class="place" type="number" min="1" max="4" value="1" id="placement1" list="placements">
-                <select  name="playerlist" list="players" id="firstplace">
-                    <option value="none" selected disabled hidden>Select a player</option>
-                </select>
+            <select id="placement1" name="place">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+            <select  name="playerlist" list="players" id="firstplace">
+                <option value="none" selected disabled hidden>Select a player</option>
+            </select>
         </div>
             <br>
         <div id="2" onchange="updateState()">
         <label for="placement">Place:</label>
-            <input class="place" type="number" min="1" max="4" value="" id="placement2" list="placements">
-                <select  name="playerlist" list="players" id="secondplace">
-                    <option value="none" selected disabled hidden>Select a player</option>
-                </select>
+            <select id="placement2" name="place" value="">
+                <option disabled selected value>-</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+            <select  name="playerlist" list="players" id="secondplace">
+                <option value="none" selected disabled hidden>Select a player</option>
+            </select>
         </div>
             <br>
         <div id="3" onchange="updateState()">
         <label for="placement">Place:</label>
-            <input class="place" type="number" min="1" max="4" value="" id="placement3" list="placements">
-                <select  name="playerlist" list="players" id="thirdplace">
-                    <option value="none" selected disabled hidden>(None)</option>
-                </select>
+            <select id="placement3" name="place">
+                <option disabled selected value>-</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+            <select  name="playerlist" list="players" id="thirdplace">
+                <option value="none" selected disabled hidden>(None)</option>
+            </select>
         </div>
             <br>
         <div id="4" onchange="updateState()">
         <label for="placement">Place:</label>
-            <input id="placement4" class="place" type="number" min="1" max="4" value="" list="placements">
-                <select  name="playerlist" list="players" id="fourthplace">
-                    <option value="none" selected disabled hidden>(None)</option>
-                </select>
+            <select id="placement4" name="place">
+                <option disabled selected value>-</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+            <select  name="playerlist" list="players" id="fourthplace">
+                <option value="none" selected disabled hidden>(None)</option>
+            </select>
         </div>
         
         <datalist id="placements">

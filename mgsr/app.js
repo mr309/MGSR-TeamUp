@@ -105,7 +105,6 @@ userIds.forEach((item) => {
 
 function updateState() {
   // Update global object with selected values
-  // let firstPlace = document.getElementById("placement1");
   let places = [
     document.getElementById("placement1"),
     document.getElementById("placement2"),
