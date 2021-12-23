@@ -21,56 +21,91 @@ const gameState = {
   },
 };
 
-const defaultCommand = "/game record leaderboard: MGSR result:";
+const defaultCommand = "/game record leaderboard: " + LEADERBOARD_NAME + " result:";
 
 // List of users, which needs updating from time to time.
-const userIds = [
-  ["516493086524964866", "__Henry__"],
-  ["807995974735364097", "Rohanisya"],
-  ["749516708099784824", "Goosebumps"],
-  ["906374386423066684", "LeSinge"],
-  ["326008716484935692", "Friskiest"],
-  ["871595637219659898", "Andrew-Morse"],
-  ["700821941724119062", "WoogieGeezer"],
-  ["147602825231335425", "CAKE13"],
-  ["689663687694221358", "manmaru"],
-  ["161114714170982400", "Mrs. Chippy"],
-  ["412116606861312001", "AlFritz"],
-  ["440226012370960423", "Eristoff 🇫🇷"],
-  ["150728328867872768", "zetite"],
-  ["751042478408335371", "An average gamer"],
-  ["108715289994096640", "Kenryu"],
-  ["483856524783910917", "capo_r420"],
-  ["513925859694870548", "Manic"],
-  ["799065911716741131", "Mia🌻"],
-  ["337749548485181441", "titandude21"],
-  ["129102832019308544", "Bluekandy"],
-  ["172140080855646219", "Note"],
-  ["210461076846936065", "Blaxton"],
-  ["310846363443134465", "jawthumb"],
-  ["361224360893349890", "The Milkman"],
-  ["450933963620352010", "BerkutReaper"],
-  ["519333443218440222", "chexmix"],
-  ["187398415812919296", "Dank Vegetables"],
-  ["918598727336345681", "McClary"],
-  ["343927790078525440", "lteinhorn"],
-  ["97452249470468096", "Mick"],
-  ["299764226745171969", "DBSssss"],
-  ["320052548557864960", "dishnet34"],
-  ["182130393242271744", "MegaMeerkat"],
-  ["788325569707245588", "Stink Man"],
-  ["578332642164867073", "carterferris07"],
-  ["920764241886195764", "E-tan"],
-  ["276134695870267392", "Lheticus"],
-  ["774417504889733170", "Dream Master"],
-  ["600344944070230026", "Ursi"],
-  ["901349011095683092", "🐙MistahKush"],
-  ["710503007074386062", "🎄Apple🎄"],
-  ["525560136811675650", "ChunkyChango"],
-  ["904871547704070144", "Orangebird"],
-  ["618908576492027914", "Shmumbz"],
-  ["480296400408805388", "Mitch"],
-];
+function getUserData(leaderboardName) {
+  switch (leaderboardName) {
+  case "MGSR":
+    return [
+      ["516493086524964866", "__Henry__"],
+      ["807995974735364097", "Rohanisya"],
+      ["749516708099784824", "Goosebumps"],
+      ["906374386423066684", "LeSinge"],
+      ["326008716484935692", "Friskiest"],
+      ["871595637219659898", "Andrew-Morse"],
+      ["700821941724119062", "WoogieGeezer"],
+      ["147602825231335425", "CAKE13"],
+      ["689663687694221358", "manmaru"],
+      ["161114714170982400", "Mrs. Chippy"],
+      ["412116606861312001", "AlFritz"],
+      ["440226012370960423", "Eristoff 🇫🇷"],
+      ["150728328867872768", "zetite"],
+      ["751042478408335371", "An average gamer"],
+      ["108715289994096640", "Kenryu"],
+      ["483856524783910917", "capo_r420"],
+      ["513925859694870548", "Manic"],
+      ["799065911716741131", "Mia🌻"],
+      ["337749548485181441", "titandude21"],
+      ["129102832019308544", "Bluekandy"],
+      ["172140080855646219", "Note"],
+      ["210461076846936065", "Blaxton"],
+      ["310846363443134465", "jawthumb"],
+      ["361224360893349890", "The Milkman"],
+      ["450933963620352010", "BerkutReaper"],
+      ["519333443218440222", "chexmix"],
+      ["187398415812919296", "Dank Vegetables"],
+      ["918598727336345681", "McClary"],
+      ["343927790078525440", "lteinhorn"],
+      ["97452249470468096", "Mick"],
+      ["299764226745171969", "DBSssss"],
+      ["320052548557864960", "dishnet34"],
+      ["182130393242271744", "MegaMeerkat"],
+      ["788325569707245588", "Stink Man"],
+      ["578332642164867073", "carterferris07"],
+      ["920764241886195764", "E-tan"],
+      ["276134695870267392", "Lheticus"],
+      ["774417504889733170", "Dream Master"],
+      ["600344944070230026", "Ursi"],
+      ["901349011095683092", "🐙MistahKush"],
+      ["710503007074386062", "🎄Apple🎄"],
+      ["525560136811675650", "ChunkyChango"],
+      ["904871547704070144", "Orangebird"],
+      ["618908576492027914", "Shmumbz"],
+      ["480296400408805388", "Mitch"],
+    ];
+
+  case "MGSR 1v1":
+    return [
+      ["178739102101929984", "Master Bates"],
+      ["516493086524964866", "__Henry__"],
+      ["749516708099784824", "DR"],
+      ["488098500765024263", "Me, Ed"],
+      ["142797219341402112", "Rabbit"],
+      ["230873770053730315", "leftytehllama"],
+      ["759971547141242933", "Michael722"],
+      ["871595637219659898", "Andrew-Morse"],
+      ["641510334515118082", "PatsWhatImTalkinAbout"],
+      ["130515887403958272", "Hamm"],
+      ["149560980081344512", "jrichgames"],
+      ["451829170092376067", "igonnawrecku"],
+      ["187245277076389888", "strangemusic"],
+      ["161114714170982400", "mr309"],
+      ["700821941724119062", "WoogieGeezer"],
+      ["150728328867872768", "zetite"],
+      ["268964485555945473", "Splash"],
+      ["901349011095683092", "🐙MistahKush"],
+      ["700822583351705640", "The Mario Odyssey"],
+      ["689663687694221358", "manmaru"],
+    ];
+
+  default:
+    return [];
+  }
+}
+
+const userIds = getUserData(LEADERBOARD_NAME);
+
 
 // Sorts the user IDs by a custom function looking at the names
 userIds.sort(function (x, y) {
@@ -105,7 +140,6 @@ userIds.forEach((item) => {
 
 function updateState() {
   // Update global object with selected values
-  // let firstPlace = document.getElementById("placement1");
   let places = [
     document.getElementById("placement1"),
     document.getElementById("placement2"),
