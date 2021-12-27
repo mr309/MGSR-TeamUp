@@ -23,7 +23,7 @@ const gameState = {
 
 const defaultCommand = "/game record leaderboard: " + LEADERBOARD_NAME + " result:";
 
-const userIDs = await getUsers(LEADERBOARD_NAME);
+const userIDs = /* await */ getUsers(LEADERBOARD_NAME);
 
 // List of users, which needs updating from time to time.
 function getUserData(leaderboardName) {
@@ -302,7 +302,7 @@ function copyClipboard(elementID) {
 }
 
 // Function to dynamically get the userlist.
-async function getUsers(leaderboardName) {
+/* async */ function getUsers(leaderboardName) {
   let leaderboardID;
   let leaderboardHash;
   let gameId;
