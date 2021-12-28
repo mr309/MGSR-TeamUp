@@ -25,7 +25,7 @@ const defaultCommand = "/game record leaderboard: " + LEADERBOARD_NAME + " resul
 
 const userIds = (async () => {
   const data = await getUsers(LEADERBOARD_NAME);
-  return data;
+  return UserSort(data);
 })();
 
 // List of users, which needs updating from time to time.
@@ -116,19 +116,21 @@ const userIds = (async () => {
 const userIds = getUserData(LEADERBOARD_NAME); */
 
 // Sorts the user IDs by a custom function looking at the names
-userIds.sort(function (x, y) {
-  n1 = normalizeNameForComparison(x[1]);
-  n2 = normalizeNameForComparison(y[1]);
+function UserSort(userIdData) {
+  userIdData.sort((x, y) => {
+    n1 = normalizeNameForComparison(x[1]);
+    n2 = normalizeNameForComparison(y[1]);
 
-  if (n1 > n2) {
-    return 1;
-  }
-  if (n1 < n2) {
-    return -1;
-  }
-  return 0;
-});
-userIds.push(["tag this person directly in Discord", "(Unlisted User)"]);
+    if (n1 > n2) {
+      return 1;
+    }
+    if (n1 < n2) {
+      return -1;
+    }
+    return 0;
+  });
+  userIds.push(["tag this person directly in Discord", "(Unlisted User)"]);
+}
 
 const list = document.querySelectorAll("[name='playerlist']");
 
