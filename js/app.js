@@ -24,7 +24,8 @@ const gameState = {
 const defaultCommand = "/game record leaderboard: " + LEADERBOARD_NAME + " result:";
 
 const userIds = (async () => {
-  await getUsers(LEADERBOARD_NAME);
+  const data = await getUsers(LEADERBOARD_NAME);
+  return data;
 })();
 
 // List of users, which needs updating from time to time.
