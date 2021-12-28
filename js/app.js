@@ -23,10 +23,10 @@ const gameState = {
 
 const defaultCommand = "/game record leaderboard: " + LEADERBOARD_NAME + " result:";
 
-// const userIDs = /* await */ getUsers(LEADERBOARD_NAME);
+const userIDs = await getUsers(LEADERBOARD_NAME);
 
 // List of users, which needs updating from time to time.
-function getUserData(leaderboardName) {
+/* function getUserData(leaderboardName) {
   switch (leaderboardName) {
     case "MGSR":
       return [
@@ -110,7 +110,7 @@ function getUserData(leaderboardName) {
   }
 }
 
-const userIds = getUserData(LEADERBOARD_NAME);
+const userIds = getUserData(LEADERBOARD_NAME); */
 
 // Sorts the user IDs by a custom function looking at the names
 userIds.sort(function (x, y) {
@@ -331,7 +331,7 @@ async function getUsers(leaderboardName) {
     mode: "cors",
   });
   var data = await leaderboard.json();
-  var userList = data.map((i) => [data[i].id, data[i].username]);
+  var userList = data.map((i) => [i.id, i.username]);
   //console.log(userList);
   return userList;
 }
