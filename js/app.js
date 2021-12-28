@@ -25,7 +25,9 @@ const defaultCommand = "/game record leaderboard: " + LEADERBOARD_NAME + " resul
 
 const userIds = (async () => {
   const data = await getUsers(LEADERBOARD_NAME);
-  return UserSort(data);
+  UserSort(data);
+  BuildHtmlLists(data);
+  return data
 })();
 
 // List of users, which needs updating from time to time.
@@ -129,12 +131,13 @@ function UserSort(userIdData) {
     }
     return 0;
   });
-  userIds.push(["tag this person directly in Discord", "(Unlisted User)"]);
+  userIdData.push(["tag this person directly in Discord", "(Unlisted User)"]);
 }
 
 const list = document.querySelectorAll("[name='playerlist']");
 
-userIds.forEach((item) => {
+function BuildHtmlLists(userIdData) {
+  userIdData.forEach((item) => {
   let option = document.createElement("option");
   option.value = item[1];
   option.textContent = item[1];
