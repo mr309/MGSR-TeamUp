@@ -333,7 +333,7 @@ async function getUsers(leaderboardName) {
   var data = await leaderboard.json();
   var userList = data.map((i) => [i.id, i.username]);
   //console.log(userList);
-  return userList;
+  return await userList;
 }
 
 /* Function below works on the leaderboard page, not actually this page.
