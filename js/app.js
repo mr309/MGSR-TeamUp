@@ -27,7 +27,7 @@ const userIds = (async () => {
   const data = await getUsers(LEADERBOARD_NAME);
   UserSort(data);
   BuildHtmlLists(data);
-  return data
+  return data;
 })();
 
 // List of users, which needs updating from time to time.
@@ -138,18 +138,19 @@ const list = document.querySelectorAll("[name='playerlist']");
 
 function BuildHtmlLists(userIdData) {
   userIdData.forEach((item) => {
-  let option = document.createElement("option");
-  option.value = item[1];
-  option.textContent = item[1];
-  option.setAttribute("data-userid", item[0]);
-  let option2 = option.cloneNode(true);
-  let option3 = option.cloneNode(true);
-  let option4 = option.cloneNode(true);
-  list[0].appendChild(option);
-  list[1].appendChild(option2);
-  list[2].appendChild(option3);
-  list[3].appendChild(option4);
-});
+    let option = document.createElement("option");
+    option.value = item[1];
+    option.textContent = item[1];
+    option.setAttribute("data-userid", item[0]);
+    let option2 = option.cloneNode(true);
+    let option3 = option.cloneNode(true);
+    let option4 = option.cloneNode(true);
+    list[0].appendChild(option);
+    list[1].appendChild(option2);
+    list[2].appendChild(option3);
+    list[3].appendChild(option4);
+  });
+}
 
 function updateState() {
   // Update global object with selected values
