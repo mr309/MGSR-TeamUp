@@ -23,7 +23,7 @@ const gameState = {
 
 const defaultCommand = "/game record leaderboard: " + LEADERBOARD_NAME + " result:";
 
-const userIds = (() => {
+const userIds = (async () => {
   await getUsers(LEADERBOARD_NAME);
 })();
 
