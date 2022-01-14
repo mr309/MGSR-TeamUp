@@ -24,98 +24,26 @@ const gameState = {
 const defaultCommand = "/game record leaderboard: " + LEADERBOARD_NAME + " result:";
 
 const userIds = (async () => {
-  const data = await getUsers(LEADERBOARD_NAME);
+  let data = [];
+  try {
+    data = await getUsers(LEADERBOARD_NAME);
+  } catch (ex) {
+    // Simulate network loading time, 1.5 seconds
+    await new Promise(sleep => setTimeout(sleep, 1500));
+
+    // Makes it possible to test changes locally before pushing to main branch
+    data = [
+      ["12", "FakeUser1"],
+      ["34", "FakeUser2"],
+      ["56", "FakeUser3"],
+      ["78", "FakeUser4"],
+      ["90", "FakeUser5"],
+    ];
+  }
   UserSort(data);
   BuildHtmlLists(data);
   return data;
 })();
-
-// List of users, which needs updating from time to time.
-/* function getUserData(leaderboardName) {
-  switch (leaderboardName) {
-    case "MGSR":
-      return [
-        ["480296400408805388", "Mitch"],
-        ["618908576492027914", "Shmumbz"],
-        ["904871547704070144", "Orangebird"],
-        ["710503007074386062", "🎄Apple🎄"],
-        ["525560136811675650", "ChunkyChango"],
-        ["578332642164867073", "carterferris07"],
-        ["600344944070230026", "Ursi"],
-        ["299764226745171969", "DBSssss"],
-        ["343927790078525440", "lteinhorn"],
-        ["774417504889733170", "Dream Master"],
-        ["276134695870267392", "Lheticus"],
-        ["320052548557864960", "dishnet34"],
-        ["920764241886195764", "E-tan"],
-        ["901349011095683092", "DoctahKush"],
-        ["788325569707245588", "Stink Man"],
-        ["799065911716741131", "Mia🌻"],
-        ["918598727336345681", "McClary"],
-        ["519333443218440222", "chexmix"],
-        ["149560980081344512", "jrichgames"],
-        ["182130393242271744", "MegaMeerkat"],
-        ["310846363443134465", "jawthumb"],
-        ["97452249470468096", "Mick"],
-        ["916695974452277258", "YuckyDucky41"],
-        ["187398415812919296", "Dank Vegetables"],
-        ["360941986242494464", "DevinHotdog"],
-        ["450933963620352010", "BerkutReaper"],
-        ["361224360893349890", "The Milkman"],
-        ["210461076846936065", "Blaxton"],
-        ["172140080855646219", "Note"],
-        ["129102832019308544", "Bluekandy"],
-        ["337749548485181441", "titandude21"],
-        ["513925859694870548", "Manic"],
-        ["483856524783910917", "capo_r420"],
-        ["108715289994096640", "Kenryu"],
-        ["751042478408335371", "An average gamer"],
-        ["294481448378040320", "blakingdom"],
-        ["150728328867872768", "zetite"],
-        ["440226012370960423", "Eristoff"],
-        ["147602825231335425", "CAKE13"],
-        ["326008716484935692", "Friskiest"],
-        ["161114714170982400", "Mrs. Chippy"],
-        ["412116606861312001", "AlFritz"],
-        ["871595637219659898", "Andrew-Morse"],
-        ["689663687694221358", "manmaru"],
-        ["906374386423066684", "LeSinge"],
-        ["700821941724119062", "WoogieGeezer"],
-        ["516493086524964866", "__Henry__"],
-        ["807995974735364097", "Rohanisya"],
-        ["749516708099784824", "Goosebumps"],
-      ];
-
-    case "MGSR 1v1":
-      return [
-        ["178739102101929984", "Master Bates"],
-        ["516493086524964866", "__Henry__"],
-        ["749516708099784824", "DR"],
-        ["488098500765024263", "Me, Ed"],
-        ["142797219341402112", "Rabbit"],
-        ["230873770053730315", "leftytehllama"],
-        ["759971547141242933", "Michael722"],
-        ["871595637219659898", "Andrew-Morse"],
-        ["641510334515118082", "PatsWhatImTalkinAbout"],
-        ["130515887403958272", "Hamm"],
-        ["149560980081344512", "jrichgames"],
-        ["451829170092376067", "igonnawrecku"],
-        ["187245277076389888", "strangemusic"],
-        ["161114714170982400", "mr309"],
-        ["700821941724119062", "WoogieGeezer"],
-        ["150728328867872768", "zetite"],
-        ["268964485555945473", "Splash"],
-        ["901349011095683092", "🐙MistahKush"],
-        ["700822583351705640", "The Mario Odyssey"],
-        ["689663687694221358", "manmaru"],
-      ];
-
-    default:
-      return [];
-  }
-}
-
-const userIds = getUserData(LEADERBOARD_NAME); */
 
 // Sorts the user IDs by a custom function looking at the names
 function UserSort(userIdData) {
@@ -131,7 +59,7 @@ function UserSort(userIdData) {
     }
     return 0;
   });
-  userIdData.push(["tag this person directly in Discord", "(Unlisted User)"]);
+  userIdData = userIdData.unshift(["TagMe", "(New Competitor)"]);
 }
 
 const list = document.querySelectorAll("[name='playerlist']");
@@ -150,6 +78,9 @@ function BuildHtmlLists(userIdData) {
     list[2].appendChild(option3);
     list[3].appendChild(option4);
   });
+
+  document.getElementById("usersNotYetLoaded").style.display = "none";
+  document.getElementById("usersLoaded").style.display = "block";
 }
 
 function updateState() {
@@ -344,30 +275,3 @@ async function getUsers(leaderboardName) {
   //console.log(userList);
   return userList;
 }
-
-/* Function below works on the leaderboard page, not actually this page.
-I used it to get the list of users and IDs. It's more of a one-time thing.
-
-async function getUsers() {
-  var leaderboard = await fetch("https://teamupdiscord.com/api/api", {
-    credentials: "include",
-    headers: {
-      Accept: "application/json",
-      "Accept-Language": "en-US,en;q=0.5",
-      "Content-Type": "application/json",
-      "Sec-Fetch-Dest": "empty",
-      "Sec-Fetch-Mode": "cors",
-      "Sec-Fetch-Site": "same-origin",
-    },
-    referrer: "https://teamupdiscord.com/leaderboard/server/812794920158363688/game/bWdzcg==/versus/1v1",
-    body: '{"guildId":"812794920158363688","gameId":"mgsr","versus":"1v1","action":"players"}',
-    method: "POST",
-    mode: "cors",
-  })
-    .then((response) => response.json())
-    .then((data) => [data.leaderboard, data.playerNames]);
-  var namesArray = Object.entries(leaderboard[1]);
-  var namesList = namesArray.map((u, i) => [namesArray[i][0], namesArray[i][1].username]);
-	console.log(namesList)
-} 
-*/
