@@ -78,6 +78,9 @@ function BuildHtmlLists(userIdData) {
     list[2].appendChild(option3);
     list[3].appendChild(option4);
   });
+
+  document.getElementById("usersNotYetLoaded").style.display = "none";
+  document.getElementById("usersLoaded").style.display = "block";
 }
 
 function updateState() {

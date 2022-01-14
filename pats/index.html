@@ -16,73 +16,80 @@
         <h2>Team Up Bot Game Results Tool</h2>
         <h3><a href="https://discord.gg/YVZwWtGG7y">Pat and the Homies</a></h3>
     </div>
-    <form id="mainform" class="fairway" onsubmit="return false;">
-        <div id="1" onchange="updateState()">
-        <label for="placement">Place:</label>
-            <select id="placement1" name="place">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-            <select  name="playerlist" list="players" id="firstplace">
-                <option value="none" selected disabled hidden>Select a player</option>
-            </select>
-        </div>
-            <br>
-        <div id="2" onchange="updateState()">
-        <label for="placement">Place:</label>
-            <select id="placement2" name="place" value="">
-                <option disabled selected value>-</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-            <select  name="playerlist" list="players" id="secondplace">
-                <option value="none" selected disabled hidden>Select a player</option>
-            </select>
-        </div>
-            <br>
-        <div id="3" onchange="updateState()">
-        <label for="placement">Place:</label>
-            <select id="placement3" name="place">
-                <option disabled selected value>-</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-            <select  name="playerlist" list="players" id="thirdplace">
-                <option value="none" selected disabled hidden>(None)</option>
-            </select>
-        </div>
-            <br>
-        <div id="4" onchange="updateState()">
-        <label for="placement">Place:</label>
-            <select id="placement4" name="place">
-                <option disabled selected value>-</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-            <select  name="playerlist" list="players" id="fourthplace">
-                <option value="none" selected disabled hidden>(None)</option>
-            </select>
-        </div>
-        
-        <datalist id="placements">
-          <option value="1">
-          <option value="2">
-          <option value="3">
-          <option value="4">
-        </datalist>
 
-    </form>
+    <div id="usersNotYetLoaded" class="fairway">
+      Loading selectable users...
+    </div>
 
-    <div id="MultiResultsArea" class="fairway">
-      Please select at least two placements and participants above
+    <div id="usersLoaded" style="display:none;">
+        <form id="mainform" class="fairway" onsubmit="return false;">
+            <div id="1" onchange="updateState()">
+            <label for="placement">Place:</label>
+                <select id="placement1" name="place">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <select  name="playerlist" list="players" id="firstplace">
+                    <option value="none" selected disabled hidden>Select a player</option>
+                </select>
+            </div>
+                <br>
+            <div id="2" onchange="updateState()">
+            <label for="placement">Place:</label>
+                <select id="placement2" name="place" value="">
+                    <option disabled selected value>-</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <select  name="playerlist" list="players" id="secondplace">
+                    <option value="none" selected disabled hidden>Select a player</option>
+                </select>
+            </div>
+                <br>
+            <div id="3" onchange="updateState()">
+            <label for="placement">Place:</label>
+                <select id="placement3" name="place">
+                    <option disabled selected value>-</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <select  name="playerlist" list="players" id="thirdplace">
+                    <option value="none" selected disabled hidden>(None)</option>
+                </select>
+            </div>
+                <br>
+            <div id="4" onchange="updateState()">
+            <label for="placement">Place:</label>
+                <select id="placement4" name="place">
+                    <option disabled selected value>-</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <select  name="playerlist" list="players" id="fourthplace">
+                    <option value="none" selected disabled hidden>(None)</option>
+                </select>
+            </div>
+            
+            <datalist id="placements">
+              <option value="1">
+              <option value="2">
+              <option value="3">
+              <option value="4">
+            </datalist>
+
+        </form>
+
+        <div id="MultiResultsArea" class="fairway">
+          Please select at least two placements and participants above
+        </div>
     </div>
 
     </main>
