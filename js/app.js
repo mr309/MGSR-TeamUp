@@ -59,7 +59,7 @@ function UserSort(userIdData) {
     }
     return 0;
   });
-  userIdData.push(["tag this person directly in Discord", "(Unlisted User)"]);
+  userIdData = userIdData.unshift(["TagMe", "(New Competitor)"]);
 }
 
 const list = document.querySelectorAll("[name='playerlist']");
