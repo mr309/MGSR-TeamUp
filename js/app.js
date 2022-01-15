@@ -23,13 +23,14 @@ const gameState = {
 
 const defaultCommand = "/game record leaderboard: " + LEADERBOARD_NAME + " result:";
 
+let userNameToID = {};
 const userIds = (async () => {
   let data = [];
   try {
     data = await getUsers(LEADERBOARD_NAME);
   } catch (ex) {
-    // Simulate network loading time, 1.5 seconds
-    await new Promise(sleep => setTimeout(sleep, 1500));
+    // Simulate network loading time, .75 seconds
+    await new Promise(sleep => setTimeout(sleep, 750));
 
     // Makes it possible to test changes locally before pushing to main branch
     data = [
@@ -41,6 +42,9 @@ const userIds = (async () => {
     ];
   }
   UserSort(data);
+  data.forEach(dataItem => {
+    userNameToID[dataItem[1]] = dataItem[0];
+  });
   BuildHtmlLists(data);
   return data;
 })();
@@ -62,7 +66,7 @@ function UserSort(userIdData) {
   userIdData = userIdData.unshift(["TagMe", "(New Competitor)"]);
 }
 
-const list = document.querySelectorAll("[name='playerlist']");
+const searchableList = document.getElementById("searchableUsers");
 
 function BuildHtmlLists(userIdData) {
   userIdData.forEach((item) => {
@@ -70,13 +74,8 @@ function BuildHtmlLists(userIdData) {
     option.value = item[1];
     option.textContent = item[1];
     option.setAttribute("data-userid", item[0]);
-    let option2 = option.cloneNode(true);
-    let option3 = option.cloneNode(true);
-    let option4 = option.cloneNode(true);
-    list[0].appendChild(option);
-    list[1].appendChild(option2);
-    list[2].appendChild(option3);
-    list[3].appendChild(option4);
+
+    searchableList.appendChild(option);
   });
 
   document.getElementById("usersNotYetLoaded").style.display = "none";
@@ -91,17 +90,17 @@ function updateState() {
     document.getElementById("placement3"),
     document.getElementById("placement4"),
   ];
-  let userIDs = [
-    places[0].nextElementSibling.selectedOptions[0].getAttribute("data-userid"),
-    places[1].nextElementSibling.selectedOptions[0].getAttribute("data-userid"),
-    places[2].nextElementSibling.selectedOptions[0].getAttribute("data-userid"),
-    places[3].nextElementSibling.selectedOptions[0].getAttribute("data-userid"),
-  ];
   let userNames = [
-    places[0].nextElementSibling.selectedOptions[0].value,
-    places[1].nextElementSibling.selectedOptions[0].value,
-    places[2].nextElementSibling.selectedOptions[0].value,
-    places[3].nextElementSibling.selectedOptions[0].value,
+    places[0].nextElementSibling.value,
+    places[1].nextElementSibling.value,
+    places[2].nextElementSibling.value,
+    places[3].nextElementSibling.value,
+  ];
+  let userIDs = [
+    userNameToID[userNames[0]],
+    userNameToID[userNames[1]],
+    userNameToID[userNames[2]],
+    userNameToID[userNames[3]],
   ];
   Object.assign(gameState, {
     1: {

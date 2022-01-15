@@ -31,9 +31,7 @@
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select>
-                <select  name="playerlist" list="players" id="firstplace">
-                    <option value="none" selected disabled hidden>Select a player</option>
-                </select>
+                <input list="searchableUsers" id="firstplace" placeholder="Select a player" />
             </div>
                 <br>
             <div id="2" onchange="updateState()">
@@ -45,9 +43,7 @@
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select>
-                <select  name="playerlist" list="players" id="secondplace">
-                    <option value="none" selected disabled hidden>Select a player</option>
-                </select>
+                <input list="searchableUsers" id="secondplace" placeholder="Select a player" />
             </div>
                 <br>
             <div id="3" onchange="updateState()">
@@ -59,9 +55,7 @@
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select>
-                <select  name="playerlist" list="players" id="thirdplace">
-                    <option value="none" selected disabled hidden>(None)</option>
-                </select>
+                <input list="searchableUsers" id="thirdplace" placeholder="(None)" />
             </div>
                 <br>
             <div id="4" onchange="updateState()">
@@ -73,16 +67,10 @@
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select>
-                <select  name="playerlist" list="players" id="fourthplace">
-                    <option value="none" selected disabled hidden>(None)</option>
-                </select>
+                <input list="searchableUsers" id="fourthplace" placeholder="(None)" />
             </div>
             
-            <datalist id="placements">
-              <option value="1">
-              <option value="2">
-              <option value="3">
-              <option value="4">
+            <datalist id="searchableUsers">
             </datalist>
 
         </form>
