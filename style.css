@@ -85,6 +85,31 @@ h3 {
   margin-bottom: 10px;
   width: 98%;
 }
+
 .place {
   width: 2.4em;
+}
+
+.footerlink {
+  text-decoration: none;
+  color: #f5f5f596;
+  font-size: smaller;
+  padding-left: 1.5em;
+}
+
+.utilities {
+  font-size: 0.75em;
+  font-weight: bold;
+}
+
+.utilities > input {
+  width: 95%;
+}
+
+.utilities > textarea {
+  width: 95%;
+}
+
+.utillabel {
+  margin-bottom: 0px;
 }
