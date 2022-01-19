@@ -90,10 +90,27 @@
         <div id="MultiResultsArea" class="fairway">
           Please select at least two placements and participants above
         </div>
+        <details>
+            <summary>Utility Commands</summary>
+            <div id="Utility Commands" class="fairway">
+                <div class="utilities">
+                    <p class="utillabel">Undo last game.</p>
+                    <input id="undo-record" value="/undo-record leaderboard:mgsr versus:1v1">
+                <br>
+                </div>
+                <div class="utilities">
+                    <p class="utillabel">Add user to leaderboard (TeamUp Admin-only).</p>
+                    <textarea id="override-elo" rows="2">/game override-elo team:(@ tag new user) leaderboard:mgsr versus:1v1 rating:1200</textarea>
+                </div>
+            </div>
+        </details>
     </div>
 
     </main>
-    
+    <footer>
+        <a class="footerlink" href="https://github.com/mr309/MGSR-TeamUp">GitHub Repo</a>
+    </footer>
+
     <script>
         const LEADERBOARD_NAME = 'MGSR 1v1';
     </script>
