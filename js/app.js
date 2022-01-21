@@ -29,7 +29,7 @@ const userIds = (async () => {
     data = await getUsers(LEADERBOARD_NAME);
   } catch (ex) {
     // Simulate network loading time, 1.5 seconds
-    await new Promise(sleep => setTimeout(sleep, 1500));
+    await new Promise((sleep) => setTimeout(sleep, 1500));
 
     // Makes it possible to test changes locally before pushing to main branch
     data = [
@@ -130,20 +130,24 @@ function updateState() {
 }
 
 function renderCommands(state) {
-  // Need to output the individual commands for each pairing
+  // Used to have to output the individual commands for each pairing
   // For a 1,2,3,4 match, this would be 6 commands
   // 1: 1v2, 1v3, 1v4; 2: 2v3, 2v4; 3: 3v4
   // For a 1,2,3 (or 1,1,3), it would be 3 commands
   // for a 1,2 (or 1,1), just 1 command
+  // No longer necessary with 1/20/22 TeamUp Update
 
   // First, clear any existing elements produced on a previous click
   document.getElementById("MultiResultsArea").innerHTML = "";
 
   let pairings = getPairings(state);
   let hasEnoughSelections = false;
+  console.log(pairings);
   let pairList = pairings.map((e) => {
     const p1 = e[0];
     const p2 = e[1];
+    const p3 = e[2];
+    const p4 = e[3];
     if (p1.place != "" && p1.userID != null && p2.place != "" && p2.userID != null) {
       // Only include results in output if it is for a valid pairing
       // Which means, the pairing has a place and user selected
@@ -152,9 +156,10 @@ function renderCommands(state) {
 
       let p1BotPlace = "1";
       let p2BotPlace = "2";
-      if (p1.place == p2.place) {
+
+      /*if (p1.place == p2.place) {
         p2BotPlace = "1";
-      }
+      }*/
 
       hasEnoughSelections = true;
       let resultHeader = document.createElement("div");
@@ -196,7 +201,9 @@ function renderCommands(state) {
   }
 }
 
-function getPairings(o) {
+// Obsolete after 1/20/22 TeamUp Update. No longer need pairings.
+// Just need to do simple '#1 ... #2 ... #3 ... #4 ... command'
+/* function getPairings(o) {
   return [
     [o[1], o[2]],
     [o[1], o[3]],
@@ -205,6 +212,11 @@ function getPairings(o) {
     [o[2], o[4]],
     [o[3], o[4]],
   ];
+}
+*/
+
+function getPairings(o) {
+  return [[o[1], o[2], o[3], o[4]]];
 }
 
 function getPlaceSuffix(placeNumber) {
