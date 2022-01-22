@@ -30,7 +30,7 @@ const userIds = (async () => {
     data = await getUsers(LEADERBOARD_NAME);
   } catch (ex) {
     // Simulate network loading time, .75 seconds
-    await new Promise(sleep => setTimeout(sleep, 750));
+    await new Promise((sleep) => setTimeout(sleep, 750));
 
     // Makes it possible to test changes locally before pushing to main branch
     data = [
@@ -63,7 +63,7 @@ function UserSort(userIdData) {
     }
     return 0;
   });
-  userIdData = userIdData.unshift(["TagMe", "(New Competitor)"]);
+  userIdData = userIdData.unshift(["TagMe", "[New Competitor]"]);
 }
 
 const searchableList = document.getElementById("searchableUsers");
@@ -145,8 +145,6 @@ function renderCommands(state) {
   let pairList = pairings.map((e) => {
     const p1 = e[0];
     const p2 = e[1];
-    const p3 = e[2];
-    const p4 = e[3];
     if (p1.place != "" && p1.userID != null && p2.place != "" && p2.userID != null) {
       // Only include results in output if it is for a valid pairing
       // Which means, the pairing has a place and user selected
@@ -163,31 +161,32 @@ function renderCommands(state) {
       }*/
 
       hasEnoughSelections = true;
+
+      let matchSize = 2;
+      const p3 = e[2];
+      if (p3.place != "" && p3.userID != null) {
+        matchSize = 3;
+      }
+
+      const p4 = e[3];
+      if (p4.place != "" && p4.userID != null) {
+        matchSize = 4;
+      }
+
       let resultHeader = document.createElement("div");
       let resultDesc = document.createElement("span");
       resultDesc.style = "font-size: 0.75em; font-weight: bold;";
-      resultDesc.innerHTML =
-        p1.place +
-        getPlaceSuffix(p1.place) +
-        " (" +
-        p1.userName +
-        ")" +
-        ", " +
-        p2.place +
-        getPlaceSuffix(p2.place) +
-        " (" +
-        p2.userName +
-        "), " +
-        p3.place +
-        getPlaceSuffix(p3.place) +
-        " (" +
-        p3.userName +
-        "), " +
-        p4.place +
-        getPlaceSuffix(p4.place) +
-        " (" +
-        p4.userName +
-        ")";
+      const resultSummaryParts = []
+      resultSummaryParts.push(p1.place + getPlaceSuffix(p1.place) + " (" + p1.userName + ")");
+      resultSummaryParts.push(p2.place + getPlaceSuffix(p2.place) + " (" + p2.userName + ")");
+      if (matchSize >= 3) {
+        resultSummaryParts.push(p3.place + getPlaceSuffix(p3.place) + " (" + p3.userName + ")");
+      }
+      if (matchSize == 4) {
+        resultSummaryParts.push(p4.place + getPlaceSuffix(p4.place) + " (" + p4.userName + ")");
+      }
+      resultDesc.innerHTML = resultSummaryParts.join(", ");
+
       let copyButton = document.createElement("button");
       copyButton.setAttribute("onclick", "copyClipboard('" + commandID + "')");
       copyButton.style = "margin-right: 4px;";
@@ -196,11 +195,19 @@ function renderCommands(state) {
       resultHeader.appendChild(resultDesc);
       document.getElementById("MultiResultsArea").appendChild(resultHeader);
 
-      let resultCommand = document.createElement("textarea");
+      let resultCommand = document.createElement("input");
       resultCommand.setAttribute("id", commandID);
       resultCommand.setAttribute("class", "command");
+
       //need to add `<@!${ }>` around usernames, for proper command in Discord.
-      const matchResultSyntax = ` #${p1.place} <@!${p1.userID}> #${p2.place} <@!${p2.userID}> #${p3.place} <@!${p3.userID}> #${p4.place} <@!${p4.userID}>`;
+      let matchResultSyntax = ` #${p1.place} <@!${p1.userID}> #${p2.place} <@!${p2.userID}>`;
+      if (matchSize >= 3) {
+        matchResultSyntax = matchResultSyntax + ` #${p3.place} <@!${p3.userID}>`;
+      }
+      if (matchSize == 4) {
+        matchResultSyntax = matchResultSyntax + ` #${p4.place} <@!${p4.userID}>`;
+      }
+
       resultCommand.value = defaultCommand + matchResultSyntax;
       document.getElementById("MultiResultsArea").appendChild(resultCommand);
     }
