@@ -129,31 +129,38 @@ function updateState() {
 }
 
 function renderCommands(state) {
-  // Need to output the individual commands for each pairing
+  // Used to have to output the individual commands for each pairing
   // For a 1,2,3,4 match, this would be 6 commands
   // 1: 1v2, 1v3, 1v4; 2: 2v3, 2v4; 3: 3v4
   // For a 1,2,3 (or 1,1,3), it would be 3 commands
   // for a 1,2 (or 1,1), just 1 command
+  // No longer necessary with 1/20/22 TeamUp Update
 
   // First, clear any existing elements produced on a previous click
   document.getElementById("MultiResultsArea").innerHTML = "";
 
   let pairings = getPairings(state);
   let hasEnoughSelections = false;
+  console.log(pairings);
   let pairList = pairings.map((e) => {
     const p1 = e[0];
     const p2 = e[1];
+    const p3 = e[2];
+    const p4 = e[3];
     if (p1.place != "" && p1.userID != null && p2.place != "" && p2.userID != null) {
       // Only include results in output if it is for a valid pairing
       // Which means, the pairing has a place and user selected
 
       const commandID = p1.userID + "_" + p2.userID;
 
-      let p1BotPlace = "1";
+      /*let p1BotPlace = "1";
       let p2BotPlace = "2";
+      let p3BotPlace = "3";
+      let p4BotPlace = "4";
+
       if (p1.place == p2.place) {
         p2BotPlace = "1";
-      }
+      }*/
 
       hasEnoughSelections = true;
       let resultHeader = document.createElement("div");
@@ -165,25 +172,35 @@ function renderCommands(state) {
         " (" +
         p1.userName +
         ")" +
-        (p1BotPlace == p2BotPlace ? " ties " : " defeats ") +
+        ", " +
         p2.place +
         getPlaceSuffix(p2.place) +
         " (" +
         p2.userName +
+        "), " +
+        p3.place +
+        getPlaceSuffix(p3.place) +
+        " (" +
+        p3.userName +
+        "), " +
+        p4.place +
+        getPlaceSuffix(p4.place) +
+        " (" +
+        p4.userName +
         ")";
       let copyButton = document.createElement("button");
       copyButton.setAttribute("onclick", "copyClipboard('" + commandID + "')");
-      copyButton.style = "margin-left: 4px;";
+      copyButton.style = "margin-right: 4px;";
       copyButton.innerHTML = "Copy";
-      resultHeader.appendChild(resultDesc);
       resultHeader.appendChild(copyButton);
+      resultHeader.appendChild(resultDesc);
       document.getElementById("MultiResultsArea").appendChild(resultHeader);
 
-      let resultCommand = document.createElement("input");
+      let resultCommand = document.createElement("textarea");
       resultCommand.setAttribute("id", commandID);
       resultCommand.setAttribute("class", "command");
       //need to add `<@!${ }>` around usernames, for proper command in Discord.
-      const matchResultSyntax = ` #${p1BotPlace} <@!${p1.userID}> #${p2BotPlace} <@!${p2.userID}>`;
+      const matchResultSyntax = ` #${p1.place} <@!${p1.userID}> #${p2.place} <@!${p2.userID}> #${p3.place} <@!${p3.userID}> #${p4.place} <@!${p4.userID}>`;
       resultCommand.value = defaultCommand + matchResultSyntax;
       document.getElementById("MultiResultsArea").appendChild(resultCommand);
     }
@@ -195,7 +212,9 @@ function renderCommands(state) {
   }
 }
 
-function getPairings(o) {
+// Obsolete after 1/20/22 TeamUp Update. No longer need pairings.
+// Just need to do simple '#1 ... #2 ... #3 ... #4 ... command'
+/* function getPairings(o) {
   return [
     [o[1], o[2]],
     [o[1], o[3]],
@@ -204,6 +223,11 @@ function getPairings(o) {
     [o[2], o[4]],
     [o[3], o[4]],
   ];
+}
+*/
+
+function getPairings(o) {
+  return [[o[1], o[2], o[3], o[4]]];
 }
 
 function getPlaceSuffix(placeNumber) {
