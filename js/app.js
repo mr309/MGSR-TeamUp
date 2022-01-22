@@ -154,10 +154,12 @@ function renderCommands(state) {
 
       const commandID = p1.userID + "_" + p2.userID;
 
-      let p1BotPlace = "1";
+      /*let p1BotPlace = "1";
       let p2BotPlace = "2";
+      let p3BotPlace = "3";
+      let p4BotPlace = "4";
 
-      /*if (p1.place == p2.place) {
+      if (p1.place == p2.place) {
         p2BotPlace = "1";
       }*/
 
@@ -171,25 +173,35 @@ function renderCommands(state) {
         " (" +
         p1.userName +
         ")" +
-        (p1BotPlace == p2BotPlace ? " ties " : " defeats ") +
+        ", " +
         p2.place +
         getPlaceSuffix(p2.place) +
         " (" +
         p2.userName +
+        "), " +
+        p3.place +
+        getPlaceSuffix(p3.place) +
+        " (" +
+        p3.userName +
+        "), " +
+        p4.place +
+        getPlaceSuffix(p4.place) +
+        " (" +
+        p4.userName +
         ")";
       let copyButton = document.createElement("button");
       copyButton.setAttribute("onclick", "copyClipboard('" + commandID + "')");
-      copyButton.style = "margin-left: 4px;";
+      copyButton.style = "margin-right: 4px;";
       copyButton.innerHTML = "Copy";
-      resultHeader.appendChild(resultDesc);
       resultHeader.appendChild(copyButton);
+      resultHeader.appendChild(resultDesc);
       document.getElementById("MultiResultsArea").appendChild(resultHeader);
 
-      let resultCommand = document.createElement("input");
+      let resultCommand = document.createElement("textarea");
       resultCommand.setAttribute("id", commandID);
       resultCommand.setAttribute("class", "command");
       //need to add `<@!${ }>` around usernames, for proper command in Discord.
-      const matchResultSyntax = ` #${p1BotPlace} <@!${p1.userID}> #${p2BotPlace} <@!${p2.userID}>`;
+      const matchResultSyntax = ` #${p1.place} <@!${p1.userID}> #${p2.place} <@!${p2.userID}> #${p3.place} <@!${p3.userID}> #${p4.place} <@!${p4.userID}>`;
       resultCommand.value = defaultCommand + matchResultSyntax;
       document.getElementById("MultiResultsArea").appendChild(resultCommand);
     }
