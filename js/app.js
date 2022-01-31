@@ -296,7 +296,7 @@ async function getUsers(leaderboardName) {
       "Sec-Fetch-Site": "same-origin",
     },
     referrer: `https://teamupdiscord.com/leaderboard/server/${leaderboardID}/game/${leaderboardHash}/versus/1`,
-    body: `{"guildId":"${leaderboardID}","gameId":"${gameId}","versus":"1v1","action":"players"}`,
+    body: `{"guildId":"${leaderboardID}","gameId":"${gameId}","versus":"1","action":"players"}`,
     method: "POST",
     mode: "cors",
   });
