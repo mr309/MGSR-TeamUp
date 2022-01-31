@@ -42,7 +42,7 @@ const userIds = (async () => {
     ];
   }
   UserSort(data);
-  data.forEach(dataItem => {
+  data.forEach((dataItem) => {
     userNameToID[dataItem[1]] = dataItem[0];
   });
   BuildHtmlLists(data);
@@ -176,7 +176,7 @@ function renderCommands(state) {
       let resultHeader = document.createElement("div");
       let resultDesc = document.createElement("span");
       resultDesc.style = "font-size: 0.75em; font-weight: bold;";
-      const resultSummaryParts = []
+      const resultSummaryParts = [];
       resultSummaryParts.push(p1.place + getPlaceSuffix(p1.place) + " (" + p1.userName + ")");
       resultSummaryParts.push(p2.place + getPlaceSuffix(p2.place) + " (" + p2.userName + ")");
       if (matchSize >= 3) {
@@ -295,7 +295,7 @@ async function getUsers(leaderboardName) {
       "Sec-Fetch-Mode": "cors",
       "Sec-Fetch-Site": "same-origin",
     },
-    referrer: `https://teamupdiscord.com/leaderboard/server/${leaderboardID}/game/${leaderboardHash}/versus/1v1`,
+    referrer: `https://teamupdiscord.com/leaderboard/server/${leaderboardID}/game/${leaderboardHash}/versus/1`,
     body: `{"guildId":"${leaderboardID}","gameId":"${gameId}","versus":"1v1","action":"players"}`,
     method: "POST",
     mode: "cors",
