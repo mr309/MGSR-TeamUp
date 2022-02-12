@@ -1,3 +1,7 @@
+//import stringSimilarity from "string-similarity-js";
+
+//var stringSimilarity = require("string-similarity");
+
 const gameState = {
   1: {
     place: "",
@@ -31,15 +35,15 @@ const userIds = (async () => {
   } catch (ex) {
     // Simulate network loading time, .75 seconds
     await new Promise((sleep) => setTimeout(sleep, 750));
-
+    console.log("Local testing.");
     // Makes it possible to test changes locally before pushing to main branch
-    data = [
+    /* data = [
       ["12", "FakeUser1"],
       ["34", "FakeUser2"],
       ["56", "FakeUser3"],
       ["78", "FakeUser4"],
       ["90", "FakeUser5"],
-    ];
+    ];*/
   }
   UserSort(data);
   data.forEach((dataItem) => {
@@ -254,7 +258,12 @@ function normalizeNameForComparison(userName) {
   // Removes all chars from strings except primary letters and numbers
   // This allows sorting to work with logically with names starting with either emoji or punctuation
   // See this for more: https://stackoverflow.com/questions/10992921/how-to-remove-emoji-code-using-javascript
-  return userName.replace(/[^\p{L}\p{N}\^$\n]/gu, "").toLowerCase();
+  // If the name is blank, null, or undefined, return an empty string
+  if (userName == null || userName == undefined || userName == "") {
+    return "";
+  } else {
+    return userName.replace(/[^\p{L}\p{N}\^$\n]/gu, "").toLowerCase();
+  }
 }
 
 // Build each pairing to output as a string, then paste into Discord.
@@ -276,15 +285,29 @@ async function getUsers(leaderboardName) {
   let leaderboardID;
   let leaderboardHash;
   let gameId;
-  if (leaderboardName == "MGSR") {
+  // If URL is localhost or 127.0.0.1, use local leaderboard.
+  if (window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")) {
+    return [
+      ["12", "FakeUser1"],
+      ["34", "FakeUser2"],
+      ["56", "FakeUser3"],
+      ["78", "FakeUser4"],
+      ["90", "FakeUser5"],
+    ];
+  } else if (leaderboardName == "MGSR") {
     leaderboardID = "812794920158363688";
     leaderboardHash = "bWdzcg==";
     gameId = "mgsr";
+    return await fetchLeaderBoard(leaderboardID, gameId);
   } else if (leaderboardName == "MGSR 1v1") {
     leaderboardID = "670656871434027049";
     leaderboardHash = "bWdzciUyMDF2MQ==";
     gameId = "mgsr 1v1";
+    return await fetchLeaderBoard(leaderboardID, gameId);
   }
+}
+
+async function fetchLeaderBoard(leaderboardID, gameId) {
   let leaderboard = await fetch("https://teamupdiscord.com/api/api", {
     credentials: "include",
     headers: {
@@ -304,4 +327,62 @@ async function getUsers(leaderboardName) {
   var userList = data.map((i) => [i.id, i.username]);
   //console.log(userList);
   return userList;
+}
+
+// Take the contents of inputCheck element and check each user against the userlist.
+async function checkInput(input) {
+  let rawString = input.value;
+  // Get the value of the userIds async function.
+  let userList = await userIds;
+  // let rawString = "#1 @FakeUser1 #2 @FakeUser2 #2 @FakeUser3 #4 @FakeUser4";
+  // Take rawString and split it into an array of strings, each string being a user, separated
+  // by a # followed by a numeral (e.g. #1 @Coach). User names may have spaces in them, so we need to include those.
+  // For example, "@Daisy (Uncertified player)" should NOT be split into ["@Daisy", "(Uncertified player)"],
+  // it should remain as one string.
+  let userArray = rawString.split(/(#\d+)/);
+  // Remove any empty strings from the array.
+  userArray = userArray.filter(Boolean);
+  // Convert the array into an array of objects with the user's place as the key and the user's name as the value.
+  let userObjects = userArray
+    .map((user, index) => {
+      if (user.includes("#")) {
+        return { place: user.substring(1), userName: userArray[index + 1] };
+      } else {
+        // Do not add an empty string to the array
+        return;
+      }
+    })
+    .filter((x) => x !== undefined);
+  //console.log(userObjects); // userObjects = [{place: "1", userName: "@Coach"}, {place: "2", userName: "@Daisy (Uncertified Player)}, {place: "2", userName: "@Derty69"}, {place: "4", userName: "@Mrs.Chippy"}]
+  // Map all userNames in userList to an array to later compare each user in userObjects against.
+  let userListArray = userList.map((e) => {
+    return e[1];
+  });
+  userObjects.forEach((user) => {
+    // user = {place: "1", userName: "@Coach"}
+    // Now normalize the userName for comparison.
+    let normalizedUserName = normalizeNameForComparison(user.userName);
+    let matches = stringSimilarity.findBestMatch(normalizedUserName, userListArray);
+    // Check if the userList contains the normalized userName.
+    user.userName = matches.bestMatch.target;
+    user.userID = userNameToID[user.userName];
+  });
+  //console.log(userObjects);
+  let matchSize = userObjects.length;
+  //need to add `<@!${ }>` around usernames, for proper command in Discord.
+  let matchResultSyntax = ` #${userObjects[0].place} <@!${userObjects[0].userID}> #${userObjects[1].place} <@!${userObjects[1].userID}>`;
+  if (matchSize >= 3) {
+    matchResultSyntax = matchResultSyntax + ` #${userObjects[2].place} <@!${userObjects[2].userID}>`;
+  }
+  if (matchSize == 4) {
+    matchResultSyntax = matchResultSyntax + ` #${userObjects[3].place} <@!${userObjects[3].userID}>`;
+  }
+
+  document.getElementById("CheckOutput").value = defaultCommand + matchResultSyntax;
+  // document.getElementById("MultiResultsArea").appendChild(resultCommand);
+
+  /* document.getElementById(
+    "CheckOutput"
+  ).value = `#${userObjects[0].place} @${userObjects[0].userName} #${userObjects[1].place} @${userObjects[1].userName} #${userObjects[2].place} @${userObjects[2].userName} #${userObjects[3].place} @${userObjects[3].userName}`;
+  */
 }

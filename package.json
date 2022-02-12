@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "string-similarity": "^4.0.4"
+  },
+  "name": "mgsr-teamup",
+  "description": "For use in the Mario Golf Super Rush Discord server, to record ranked games with the Team Up bot.",
+  "version": "1.0.0",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mr309/MGSR-TeamUp.git"
+  },
+  "author": "mr309",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mr309/MGSR-TeamUp/issues"
+  },
+  "homepage": "https://github.com/mr309/MGSR-TeamUp#readme"
+}
