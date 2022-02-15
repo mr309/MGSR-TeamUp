@@ -329,12 +329,90 @@ async function fetchLeaderBoard(leaderboardID, gameId) {
   return userList;
 }
 
+function debounce(func, timeout = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, timeout);
+  };
+}
+
+const processChange = debounce((input) => checkInput(input));
+
 // Take the contents of inputCheck element and check each user against the userlist.
 async function checkInput(input) {
-  let rawString = input.value;
   // Get the value of the userIds async function.
   let userList = await userIds;
-  // let rawString = "#1 @FakeUser1 #2 @FakeUser2 #2 @FakeUser3 #4 @FakeUser4";
+  let { userObjects, userListArray } = formatInput(input, userList);
+
+  /*if (!rawString.includes("#")) {
+    throw "Improperly formatted report. All reports should be as follows: #1 @user1 #2 @user2 #3 @user3 ...";
+  }*/
+
+  // Check if userObjects is nullish, and if so, throw an error.
+  /*
+  if (userObjects[1] == (null || undefined || "")) {
+    throw "Empty user list. Please add user(s).";
+  }*/
+
+  try {
+    userObjects.forEach((user) => {
+      // If user name does not contain <@> or <@!>, then check the userName field in the userList.
+      if (!user.userName.includes("<@") && !user.userName.includes("<@!")) {
+        // user = {place: "1", userName: "@Coach"}
+        // Now normalize the userName for comparison.
+        let normalizedUserName = normalizeNameForComparison(user.userName);
+        let matches = stringSimilarity.findBestMatch(normalizedUserName, userListArray[2]);
+        // Check if the userList contains the normalized userName.
+        if (matches.bestMatch.rating >= 0.7) {
+          user.userName = userListArray[1][matches.bestMatchIndex];
+          user.userID = userNameToID[user.userName];
+        } else {
+          user.userName = "TagMe";
+          user.userID = "[New Competitor/Alternate Name]";
+        }
+      } else {
+        // If user name contains <@> or <@!>, then check the userID field in the userList.
+        let userID = user.userName.replace(/[^a-zA-Z0-9]/g, "");
+        let matches = stringSimilarity.findBestMatch(userID, userListArray[0]);
+        if (matches.bestMatch.rating == 1.0) {
+          user.userName = userListArray[1][matches.bestMatchIndex];
+          user.userID = userListArray[0][matches.bestMatchIndex];
+        } else {
+          user.userName = "TagMe";
+          user.userID = "[New Competitor/Alternate Name]";
+        }
+      }
+    });
+    //console.log(userObjects);
+    let matchSize = userObjects.length;
+    if (matchSize < 2) {
+      return;
+    }
+    //need to add `<@!${ }>` around usernames, for proper command in Discord.
+    let matchResultSyntax = ` #${userObjects[0].place} <@!${userObjects[0].userID}> #${userObjects[1].place} <@!${userObjects[1].userID}>`;
+    if (matchSize >= 3) {
+      matchResultSyntax = matchResultSyntax + ` #${userObjects[2].place} <@!${userObjects[2].userID}>`;
+    }
+    if (matchSize == 4) {
+      matchResultSyntax = matchResultSyntax + ` #${userObjects[3].place} <@!${userObjects[3].userID}>`;
+    }
+
+    document.getElementById("CheckOutput").value = defaultCommand + matchResultSyntax;
+  } catch (error) {
+    console.error(error);
+    // document.getElementById("MultiResultsArea").appendChild(resultCommand);
+
+    /* document.getElementById(
+    "CheckOutput"
+  ).value = `#${userObjects[0].place} @${userObjects[0].userName} #${userObjects[1].place} @${userObjects[1].userName} #${userObjects[2].place} @${userObjects[2].userName} #${userObjects[3].place} @${userObjects[3].userName}`;
+  */
+  }
+}
+function formatInput(input, userList) {
+  let rawString = input.value;
   // Take rawString and split it into an array of strings, each string being a user, separated
   // by a # followed by a numeral (e.g. #1 @Coach). User names may have spaces in them, so we need to include those.
   // For example, "@Daisy (Uncertified player)" should NOT be split into ["@Daisy", "(Uncertified player)"],
@@ -355,34 +433,6 @@ async function checkInput(input) {
     .filter((x) => x !== undefined);
   //console.log(userObjects); // userObjects = [{place: "1", userName: "@Coach"}, {place: "2", userName: "@Daisy (Uncertified Player)}, {place: "2", userName: "@Derty69"}, {place: "4", userName: "@Mrs.Chippy"}]
   // Map all userNames in userList to an array to later compare each user in userObjects against.
-  let userListArray = userList.map((e) => {
-    return e[1];
-  });
-  userObjects.forEach((user) => {
-    // user = {place: "1", userName: "@Coach"}
-    // Now normalize the userName for comparison.
-    let normalizedUserName = normalizeNameForComparison(user.userName);
-    let matches = stringSimilarity.findBestMatch(normalizedUserName, userListArray);
-    // Check if the userList contains the normalized userName.
-    user.userName = matches.bestMatch.target;
-    user.userID = userNameToID[user.userName];
-  });
-  //console.log(userObjects);
-  let matchSize = userObjects.length;
-  //need to add `<@!${ }>` around usernames, for proper command in Discord.
-  let matchResultSyntax = ` #${userObjects[0].place} <@!${userObjects[0].userID}> #${userObjects[1].place} <@!${userObjects[1].userID}>`;
-  if (matchSize >= 3) {
-    matchResultSyntax = matchResultSyntax + ` #${userObjects[2].place} <@!${userObjects[2].userID}>`;
-  }
-  if (matchSize == 4) {
-    matchResultSyntax = matchResultSyntax + ` #${userObjects[3].place} <@!${userObjects[3].userID}>`;
-  }
-
-  document.getElementById("CheckOutput").value = defaultCommand + matchResultSyntax;
-  // document.getElementById("MultiResultsArea").appendChild(resultCommand);
-
-  /* document.getElementById(
-    "CheckOutput"
-  ).value = `#${userObjects[0].place} @${userObjects[0].userName} #${userObjects[1].place} @${userObjects[1].userName} #${userObjects[2].place} @${userObjects[2].userName} #${userObjects[3].place} @${userObjects[3].userName}`;
-  */
+  let userListArray = [userList.map((e) => e[0]), userList.map((e) => e[1]), userList.map((e) => e[1].toLowerCase())];
+  return { userObjects, userListArray };
 }
