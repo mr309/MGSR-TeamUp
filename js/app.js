@@ -369,6 +369,7 @@ async function checkInput(input) {
         if (matches.bestMatch.rating >= 0.7) {
           user.userName = userListArray[1][matches.bestMatchIndex];
           user.userID = userNameToID[user.userName];
+          console.log(user.userName + " " + user.userID);
         } else {
           user.userName = "TagMe";
           user.userID = "[New Competitor/Alternate Name]";
@@ -380,6 +381,7 @@ async function checkInput(input) {
         if (matches.bestMatch.rating == 1.0) {
           user.userName = userListArray[1][matches.bestMatchIndex];
           user.userID = userListArray[0][matches.bestMatchIndex];
+          console.log(user.userName + " " + user.userID);
         } else {
           user.userName = "TagMe";
           user.userID = "[New Competitor/Alternate Name]";
