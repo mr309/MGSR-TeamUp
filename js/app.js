@@ -84,6 +84,7 @@ function BuildHtmlLists(userIdData) {
 
   document.getElementById("usersNotYetLoaded").style.display = "none";
   document.getElementById("usersLoaded").style.display = "block";
+  document.getElementById("inputParser").style.display = "block";
 }
 
 // Updates state based on string input copied from Discord.
@@ -318,7 +319,7 @@ async function getUsers(leaderboardName) {
   let leaderboardHash;
   let gameId;
   // If URL is localhost or 127.0.0.1, use local leaderboard.
-  if (window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")) {
+  if (!window.location.href.includes("mr309.github.io")) {
     return [
       ["12", "FakeUser1"],
       ["34", "FakeUser2"],
