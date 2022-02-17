@@ -86,6 +86,13 @@ h3 {
   width: 98%;
 }
 
+.label {
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
 .place {
   width: 2.4em;
 }
@@ -98,8 +105,7 @@ h3 {
 }
 
 .utilities {
-  font-size: 0.75em;
-  font-weight: bold;
+  margin-top: 0px;
 }
 
 .utilities > input {
@@ -111,5 +117,7 @@ h3 {
 }
 
 .utillabel {
+  font-size: 0.75em;
+  font-weight: bold;
   margin-bottom: 0px;
 }

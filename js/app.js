@@ -86,6 +86,31 @@ function BuildHtmlLists(userIdData) {
   document.getElementById("usersLoaded").style.display = "block";
 }
 
+// Updates state based on string input copied from Discord.
+function updateNewState(userobject) {
+  userobject.forEach((e, index) => {
+    Object.assign(gameState, {
+      [index + 1]: {
+        place: e.place,
+        userID: e.userID,
+        userName: e.userName,
+      },
+    });
+  });
+  renderCommands(gameState);
+  updateDOMState();
+}
+
+// Function to verify that the placements in gameState correspond to the inputs in mainform element.
+// Changes the DOM element values to match the gameState values.
+function updateDOMState() {
+  let mainform = document.getElementById("mainform");
+  let placeSelects = mainform.querySelectorAll("[name='place']");
+  let playerSelects = mainform.querySelectorAll("input");
+  placeSelects.forEach((e, index) => (e.value = gameState[index + 1].place));
+  playerSelects.forEach((e, index) => (e.value = gameState[index + 1].userName));
+}
+
 function updateState() {
   // Update global object with selected values
   let places = [
@@ -128,7 +153,6 @@ function updateState() {
       userName: userNames[3],
     },
   });
-
   renderCommands(gameState);
 }
 
@@ -145,7 +169,7 @@ function renderCommands(state) {
 
   let pairings = getPairings(state);
   let hasEnoughSelections = false;
-  console.log(pairings);
+  // console.log(pairings);
   let pairList = pairings.map((e) => {
     const p1 = e[0];
     const p2 = e[1];
@@ -153,7 +177,7 @@ function renderCommands(state) {
       // Only include results in output if it is for a valid pairing
       // Which means, the pairing has a place and user selected
 
-      const commandID = p1.userID + "_" + p2.userID;
+      // const commandID = p1.userID + "_" + p2.userID;
 
       /*let p1BotPlace = "1";
       let p2BotPlace = "2";
@@ -177,27 +201,9 @@ function renderCommands(state) {
         matchSize = 4;
       }
 
-      let resultHeader = document.createElement("div");
-      let resultDesc = document.createElement("span");
-      resultDesc.style = "font-size: 0.75em; font-weight: bold;";
-      const resultSummaryParts = [];
-      resultSummaryParts.push(p1.place + getPlaceSuffix(p1.place) + " (" + p1.userName + ")");
-      resultSummaryParts.push(p2.place + getPlaceSuffix(p2.place) + " (" + p2.userName + ")");
-      if (matchSize >= 3) {
-        resultSummaryParts.push(p3.place + getPlaceSuffix(p3.place) + " (" + p3.userName + ")");
-      }
-      if (matchSize == 4) {
-        resultSummaryParts.push(p4.place + getPlaceSuffix(p4.place) + " (" + p4.userName + ")");
-      }
-      resultDesc.innerHTML = resultSummaryParts.join(", ");
-
-      let copyButton = document.createElement("button");
-      copyButton.setAttribute("onclick", "copyClipboard('" + commandID + "')");
-      copyButton.style = "margin-right: 4px;";
-      copyButton.innerHTML = "Copy";
-      resultHeader.appendChild(copyButton);
-      resultHeader.appendChild(resultDesc);
-      document.getElementById("MultiResultsArea").appendChild(resultHeader);
+      let commandID = "OutputArea";
+      ordinalPlaces(p1, p2, matchSize, p3, p4, commandID, "MultiResultsArea");
+      //ordinalPlaces(p1, p2, matchSize, p3, p4, "MultiResultsArea");
 
       let resultCommand = document.createElement("input");
       resultCommand.setAttribute("id", commandID);
@@ -221,6 +227,32 @@ function renderCommands(state) {
     document.getElementById("MultiResultsArea").innerHTML =
       "Please select at least two placements and participants above";
   }
+}
+
+function ordinalPlaces(p1, p2, matchSize, p3, p4, commandID, input) {
+  //function ordinalPlaces(p1, p2, matchSize, p3, p4, input) {
+  let resultHeader = document.createElement("div");
+  resultHeader.setAttribute("id", commandID);
+  let resultDesc = document.createElement("span");
+  resultDesc.style = "font-size: 0.75em; font-weight: bold;";
+  const resultSummaryParts = [];
+  resultSummaryParts.push(p1.place + getPlaceSuffix(p1.place) + " (" + p1.userName + ")");
+  resultSummaryParts.push(p2.place + getPlaceSuffix(p2.place) + " (" + p2.userName + ")");
+  if (matchSize >= 3) {
+    resultSummaryParts.push(p3.place + getPlaceSuffix(p3.place) + " (" + p3.userName + ")");
+  }
+  if (matchSize == 4) {
+    resultSummaryParts.push(p4.place + getPlaceSuffix(p4.place) + " (" + p4.userName + ")");
+  }
+  resultDesc.innerHTML = resultSummaryParts.join(", ");
+
+  let copyButton = document.createElement("button");
+  copyButton.setAttribute("onclick", "copyClipboard('" + commandID + "')");
+  copyButton.style = "margin-right: 4px;";
+  copyButton.innerHTML = "Copy";
+  resultHeader.appendChild(copyButton);
+  resultHeader.appendChild(resultDesc);
+  document.getElementById(input).appendChild(resultHeader);
 }
 
 // Obsolete after 1/20/22 TeamUp Update. No longer need pairings.
@@ -369,10 +401,10 @@ async function checkInput(input) {
         if (matches.bestMatch.rating >= 0.7) {
           user.userName = userListArray[1][matches.bestMatchIndex];
           user.userID = userNameToID[user.userName];
-          console.log(user.userName + " " + user.userID);
+          //console.log(user.userName + " " + user.userID);
         } else {
-          user.userName = "TagMe";
-          user.userID = "[New Competitor/Alternate Name]";
+          user.userName = "[New Competitor/Alternate Name]";
+          user.userID = "TagMe";
         }
       } else {
         // If user name contains <@> or <@!>, then check the userID field in the userList.
@@ -381,7 +413,7 @@ async function checkInput(input) {
         if (matches.bestMatch.rating == 1.0) {
           user.userName = userListArray[1][matches.bestMatchIndex];
           user.userID = userListArray[0][matches.bestMatchIndex];
-          console.log(user.userName + " " + user.userID);
+          //console.log(user.userName + " " + user.userID);
         } else {
           user.userName = "TagMe";
           user.userID = "[New Competitor/Alternate Name]";
@@ -389,20 +421,32 @@ async function checkInput(input) {
       }
     });
     //console.log(userObjects);
+    let p1 = userObjects[0];
+    let p2 = userObjects[1];
+    let p3 = userObjects[2];
+    let p4 = userObjects[3];
+
+    updateNewState(userObjects);
+    // updateNewState(p2);
+    // updateNewState(p3);
+    // updateNewState(p4);
+
     let matchSize = userObjects.length;
     if (matchSize < 2) {
       return;
     }
     //need to add `<@!${ }>` around usernames, for proper command in Discord.
-    let matchResultSyntax = ` #${userObjects[0].place} <@!${userObjects[0].userID}> #${userObjects[1].place} <@!${userObjects[1].userID}>`;
+    let matchResultSyntax = ` #${p1.place} <@!${p1.userID}> #${p2.place} <@!${p2.userID}>`;
     if (matchSize >= 3) {
-      matchResultSyntax = matchResultSyntax + ` #${userObjects[2].place} <@!${userObjects[2].userID}>`;
+      matchResultSyntax = matchResultSyntax + ` #${p3.place} <@!${p3.userID}>`;
     }
     if (matchSize == 4) {
-      matchResultSyntax = matchResultSyntax + ` #${userObjects[3].place} <@!${userObjects[3].userID}>`;
+      matchResultSyntax = matchResultSyntax + ` #${p4.place} <@!${p4.userID}>`;
     }
 
-    document.getElementById("CheckOutput").value = defaultCommand + matchResultSyntax;
+    // ordinalPlaces(p1, p2, matchSize, p3, p4, commandID, "InputCheck");
+    //ordinalPlaces(p1, p2, matchSize, p3, p4, "ResultHeader", "CheckOutput");
+    //document.getElementById("CheckOutput").value = defaultCommand + matchResultSyntax;
   } catch (error) {
     console.error(error);
     // document.getElementById("MultiResultsArea").appendChild(resultCommand);
