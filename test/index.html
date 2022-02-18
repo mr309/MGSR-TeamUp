@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MGSR Team-Up Results Utility (Testing)</title>
     <link rel="stylesheet" href="../style.css">
-    <script src="//unpkg.com/string-similarity/umd/string-similarity.min.js"></script>
 </head>
 
 <body>
@@ -22,9 +21,9 @@
       Loading selectable users...
     </div>
 
-    <div id="inputParser" class="fairway">
+    <div id="inputParser" class="fairway" style="display:none;">
         <p class="label">EXPERIMENTAL: Enter a formatted game report from Discord.</p>
-        <input id="InputCheck" type="text" placeholder="#1 ... #2 ... #3 ... #4 ..." onkeyup="processChange(this)" style="width: 90%" />
+        <input id="InputCheck" type="text" placeholder="#1 ... #2 ... #3 ... #4 ..." onkeyup="processChange(this)"  onpaste="processChange(this)" style="width: 90%" />
         <!-- input id="CheckOutput" type="text" placeholder="Output" style="width: 90%"/-->
       </div>
 
@@ -109,6 +108,7 @@
     <script>
         const LEADERBOARD_NAME = 'MGSR';
     </script>
+    <script src="https://unpkg.com/string-similarity/umd/string-similarity.min.js"></script>
     <script src="../js/app.js"></script>
 </body>
 
