@@ -460,7 +460,7 @@ async function checkInput(input) {
 }
 function formatInput(input, userList) {
   // Get raw string, replace newlines with spaces
-  const rawString = input.value.replace(/[\r\n]+/g," ");
+  const rawString = input.value.replace(/[\r\n]+/g, " ");
 
   // Get each individual space-separated word/phrase
   const rawWords = rawString.split(" ");
@@ -491,8 +491,8 @@ function formatInput(input, userList) {
       if (currentPlacement != "0") {
         // Dump previous accumulated memory buffer as a user object
         parsedUsers.push({
-          "place": currentPlacement,
-          "userName": currentName.join(" "),
+          place: currentPlacement,
+          userName: currentName.join(" "),
         });
       }
 
@@ -504,15 +504,19 @@ function formatInput(input, userList) {
 
   // Dump final content of memory buffers as a user Object
   parsedUsers.push({
-    "place": currentPlacement,
-    "userName": currentName.join(" "),
+    place: currentPlacement,
+    userName: currentName.join(" "),
   });
 
   //console.log(parsedUsers); // parsedUsers = [{place: "1", userName: "@Coach"}, {place: "2", userName: "@Daisy (Uncertified Player)}, {place: "2", userName: "@Derty69"}, {place: "4", userName: "@Mrs.Chippy"}]
 
   // Map all userNames in userList to an array to later compare each user in parsedUsers against.
   let userObjects = parsedUsers;
-  let userListArray = [userList.map((e) => e[0]), userList.map((e) => e[1]), userList.map((e) => e[1].toLowerCase())];
+  let userListArray = [
+    userList.map((e) => e[0]),
+    userList.map((e) => e[1]),
+    userList.map((e) => normalizeNameForComparison(e[1].toLowerCase())),
+  ];
   return { userObjects, userListArray };
 }
 
