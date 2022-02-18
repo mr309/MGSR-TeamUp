@@ -323,9 +323,9 @@ async function getUsers(leaderboardName) {
     return [
       ["12", "FakeUser1"],
       ["34", "FakeUser2"],
-      ["56", "FakeUser3"],
-      ["78", "FakeUser4"],
-      ["90", "FakeUser5"],
+      ["56", "Fake User3"],
+      ["78", "FakeUser 4567"],
+      ["90", "Fake User 8)"],
     ];
   } else if (leaderboardName == "MGSR") {
     leaderboardID = "812794920158363688";
@@ -459,27 +459,100 @@ async function checkInput(input) {
   }
 }
 function formatInput(input, userList) {
-  let rawString = input.value;
-  // Take rawString and split it into an array of strings, each string being a user, separated
-  // by a # followed by a numeral (e.g. #1 @Coach). User names may have spaces in them, so we need to include those.
-  // For example, "@Daisy (Uncertified player)" should NOT be split into ["@Daisy", "(Uncertified player)"],
-  // it should remain as one string.
-  let userArray = rawString.split(/(#\d+)/);
-  // Remove any empty strings from the array.
-  userArray = userArray.filter(Boolean);
-  // Convert the array into an array of objects with the user's place as the key and the user's name as the value.
-  let userObjects = userArray
-    .map((user, index) => {
-      if (user.includes("#")) {
-        return { place: user.substring(1), userName: userArray[index + 1] };
-      } else {
-        // Do not add an empty string to the array
-        return;
+  // Get raw string, replace newlines with spaces
+  const rawString = input.value.replace(/[\r\n]+/g," ");
+
+  // Get each individual space-separated word/phrase
+  const rawWords = rawString.split(" ");
+
+  // These two variables are memory buffers to store the place and multiple user name space-separated strings
+  // When the next placement string is detected, whatever is here will be dumped into parsedUsers
+  let currentPlacement = "0";
+  let currentName = [];
+
+  // Holder for placement+name objects
+  const parsedUsers = [];
+
+  // Loop through all words, find placements, treat strings afterwards as user name until the next placement number is found
+  for (let i = 0; i < rawWords.length; i++) {
+    const currentWord = rawWords[i];
+    if (currentWord == undefined || currentWord == "") {
+      // If there were consecutive spaces, skip this empty string
+      continue;
+    }
+
+    const placementNumber = getPlacementNumber(currentWord);
+    console.log("place" + placementNumber + "; word=" + currentWord);
+    if (placementNumber == null) {
+      // This word is part of a user name or ID
+      currentName.push(currentWord);
+    } else {
+      // New placement number string detected
+      if (currentPlacement != "0") {
+        // Dump previous accumulated memory buffer as a user object
+        parsedUsers.push({
+          "place": currentPlacement,
+          "userName": currentName.join(" "),
+        });
       }
-    })
-    .filter((x) => x !== undefined);
-  //console.log(userObjects); // userObjects = [{place: "1", userName: "@Coach"}, {place: "2", userName: "@Daisy (Uncertified Player)}, {place: "2", userName: "@Derty69"}, {place: "4", userName: "@Mrs.Chippy"}]
-  // Map all userNames in userList to an array to later compare each user in userObjects against.
+
+      // Reset memory buffers
+      currentPlacement = placementNumber;
+      currentName = [];
+    }
+  }
+
+  // Dump final content of memory buffers as a user Object
+  parsedUsers.push({
+    "place": currentPlacement,
+    "userName": currentName.join(" "),
+  });
+
+  //console.log(parsedUsers); // parsedUsers = [{place: "1", userName: "@Coach"}, {place: "2", userName: "@Daisy (Uncertified Player)}, {place: "2", userName: "@Derty69"}, {place: "4", userName: "@Mrs.Chippy"}]
+
+  // Map all userNames in userList to an array to later compare each user in parsedUsers against.
+  let userObjects = parsedUsers;
   let userListArray = [userList.map((e) => e[0]), userList.map((e) => e[1]), userList.map((e) => e[1].toLowerCase())];
   return { userObjects, userListArray };
+}
+
+function getPlacementNumber(phrase) {
+  // Will definitely not have an @ symbol which indicates user name
+  if (phrase.includes("@")) {
+    return null;
+  }
+
+  // Placement indicator will be a short phrase
+  if (phrase.length > 4) {
+    return null;
+  }
+
+  // Placement indicator would have 1,2,3,4 number in it
+  let placementNum = null;
+  if (phrase.includes("1")) {
+    placementNum = "1";
+  } else if (phrase.includes("2")) {
+    placementNum = "2";
+  } else if (phrase.includes("3")) {
+    placementNum = "3";
+  } else if (phrase.includes("4")) {
+    placementNum = "4";
+  }
+
+  // If 1/2/3/4 number not found, not a placement string
+  if (placementNum == null) {
+    return null;
+  }
+
+  // No other number should be present in the phrase
+  const phraseWithoutPlacement = phrase.replace(placementNum, "p");
+  const otherNumbers = phraseWithoutPlacement.match(/(\d)/);
+  if (otherNumbers != null) {
+    // More than one number indicates it is not a placement string
+    // Could be longer number, or part of name
+    return null;
+  }
+
+  // Seems we have found a placement string, return the non-null number
+  return placementNum;
 }
