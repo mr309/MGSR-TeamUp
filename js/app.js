@@ -232,7 +232,7 @@ function renderCommands(state) {
 function ordinalPlaces(p1, p2, matchSize, p3, p4, commandID, input) {
   //function ordinalPlaces(p1, p2, matchSize, p3, p4, input) {
   let resultHeader = document.createElement("div");
-  resultHeader.setAttribute("id", commandID);
+  resultHeader.setAttribute("id", "ResultsHeader");
   let resultDesc = document.createElement("span");
   resultDesc.style = "font-size: 0.75em; font-weight: bold;";
   const resultSummaryParts = [];
