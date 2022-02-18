@@ -403,10 +403,10 @@ async function checkInput(input) {
           user.userName = userListArray[1][matches.bestMatchIndex];
           user.userID = userNameToID[user.userName];
           //console.log(user.userName + " " + user.userID);
-        } else {
+        } /* else {
           user.userName = "[New Competitor/Alternate Name]";
           user.userID = "TagMe";
-        }
+        } */
       } else {
         // If user name contains <@> or <@!>, then check the userID field in the userList.
         let userID = user.userName.replace(/[^a-zA-Z0-9]/g, "");
@@ -415,10 +415,10 @@ async function checkInput(input) {
           user.userName = userListArray[1][matches.bestMatchIndex];
           user.userID = userListArray[0][matches.bestMatchIndex];
           //console.log(user.userName + " " + user.userID);
-        } else {
+        } /* else {
           user.userName = "TagMe";
           user.userID = "[New Competitor/Alternate Name]";
-        }
+        }*/
       }
     });
     //console.log(userObjects);
