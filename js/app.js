@@ -560,3 +560,33 @@ function getPlacementNumber(phrase) {
   // Seems we have found a placement string, return the non-null number
   return placementNum;
 }
+
+// Assign empty strings to each element in the gameState object and update the DOM to reflect the new state
+function clearInputs() {
+  Object.assign(gameState, {
+    1: {
+      place: "",
+      userID: "",
+      userName: "",
+    },
+    2: {
+      place: "",
+      userID: "",
+      userName: "",
+    },
+    3: {
+      place: "",
+      userID: "",
+      userName: "",
+    },
+    4: {
+      place: "",
+      userID: "",
+      userName: "",
+    },
+  });
+  let inputCheck = document.getElementById("InputCheck");
+  inputCheck.value = "";
+  processChange(inputCheck);
+  updateDOMState();
+}

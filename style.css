@@ -33,6 +33,13 @@ button {
   padding: 0.125em 0.5em;
 }
 
+.clearbutton {
+  display: block;
+  width: 6em;
+  height: 2em;
+  margin: auto;
+}
+
 .fairway {
   background-color: #90d215;
   border-radius: 18px;
