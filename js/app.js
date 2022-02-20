@@ -1,6 +1,14 @@
-//import stringSimilarity from "string-similarity-js";
-
-//var stringSimilarity = require("string-similarity");
+const NICKNAME_LOOKUP = {
+  // Dictionary of nicknames in MGSR Server which cannot be easily matched to actual Discord username
+  // Use normalized version of names, no punctation, no spaces, all lowercase
+  "h": "igonnawrecku",
+  "mississippichippy": "mrschippy",
+  "speed": "speedmcdemon",
+  "wooly": "zetite",
+  "woolyzetite": "zetite",
+  "will": "william",
+  "uvwxyz": "fakeuser2",  // Only for testing
+};
 
 const gameState = {
   1: {
@@ -35,15 +43,6 @@ const userIds = (async () => {
   } catch (ex) {
     // Simulate network loading time, .75 seconds
     await new Promise((sleep) => setTimeout(sleep, 750));
-    console.log("Local testing.");
-    // Makes it possible to test changes locally before pushing to main branch
-    /* data = [
-      ["12", "FakeUser1"],
-      ["34", "FakeUser2"],
-      ["56", "FakeUser3"],
-      ["78", "FakeUser4"],
-      ["90", "FakeUser5"],
-    ];*/
   }
   UserSort(data);
   data.forEach((dataItem) => {
@@ -178,17 +177,6 @@ function renderCommands(state) {
       // Only include results in output if it is for a valid pairing
       // Which means, the pairing has a place and user selected
 
-      // const commandID = p1.userID + "_" + p2.userID;
-
-      /*let p1BotPlace = "1";
-      let p2BotPlace = "2";
-      let p3BotPlace = "3";
-      let p4BotPlace = "4";
-
-      if (p1.place == p2.place) {
-        p2BotPlace = "1";
-      }*/
-
       hasEnoughSelections = true;
 
       let matchSize = 2;
@@ -256,20 +244,6 @@ function ordinalPlaces(p1, p2, matchSize, p3, p4, commandID, input) {
   document.getElementById(input).appendChild(resultHeader);
 }
 
-// Obsolete after 1/20/22 TeamUp Update. No longer need pairings.
-// Just need to do simple '#1 ... #2 ... #3 ... #4 ... command'
-/* function getPairings(o) {
-  return [
-    [o[1], o[2]],
-    [o[1], o[3]],
-    [o[1], o[4]],
-    [o[2], o[3]],
-    [o[2], o[4]],
-    [o[3], o[4]],
-  ];
-}
-*/
-
 function getPairings(o) {
   return [[o[1], o[2], o[3], o[4]]];
 }
@@ -297,6 +271,13 @@ function normalizeNameForComparison(userName) {
   } else {
     return userName.replace(/[^\p{L}\p{N}\^$\n]/gu, "").toLowerCase();
   }
+}
+
+function lookupAlternateUserName(userNickName) {
+  if (userNickName in NICKNAME_LOOKUP) {
+    return NICKNAME_LOOKUP[userNickName];
+  }
+  return userNickName;
 }
 
 // Build each pairing to output as a string, then paste into Discord.
@@ -397,7 +378,8 @@ async function checkInput(input) {
         // user = {place: "1", userName: "@Coach"}
         // Now normalize the userName for comparison.
         let normalizedUserName = normalizeNameForComparison(user.userName);
-        let matches = stringSimilarity.findBestMatch(normalizedUserName, userListArray[2]);
+        const translatedUserName = lookupAlternateUserName(normalizedUserName);
+        let matches = stringSimilarity.findBestMatch(translatedUserName, userListArray[2]);
         // Check if the userList contains the normalized userName.
         if (matches.bestMatch.rating >= 0.7) {
           user.userName = userListArray[1][matches.bestMatchIndex];
