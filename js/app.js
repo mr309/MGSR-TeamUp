@@ -3,6 +3,7 @@ const NICKNAME_LOOKUP = {
   // Use normalized version of names, no punctation, no spaces, all lowercase
   "h": "igonnawrecku",
   "mississippichippy": "mrschippy",
+  "poolguy": "ironfist68",
   "speed": "speedmcdemon",
   "wooly": "zetite",
   "woolyzetite": "zetite",
