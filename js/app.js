@@ -2,6 +2,10 @@ const NICKNAME_LOOKUP = {
   // Dictionary of nicknames in MGSR Server which cannot be easily matched to actual Discord username
   // Use normalized version of names, no punctation, no spaces, all lowercase
   "h": "igonnawrecku",
+  "phantompowered": "strangemusic",
+  "poolguy": "ironfist68",
+  "thatoneguy": "theyosh",
+  "drebick": "sdreb3421",
   "mississippichippy": "mrschippy",
   "speed": "speedmcdemon",
   "wooly": "zetite",
