@@ -7,6 +7,7 @@ const NICKNAME_LOOKUP = {
   "thatoneguy": "theyosh",
   "drebick": "sdreb3421",
   "mississippichippy": "mrschippy",
+  "poolguy": "ironfist68",
   "speed": "speedmcdemon",
   "wooly": "zetite",
   "woolyzetite": "zetite",
