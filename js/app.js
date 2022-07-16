@@ -5,7 +5,7 @@ const NICKNAME_LOOKUP = {
   "phantompowered": "strangemusic",
   "poolguy": "ironfist68",
   "thatoneguy": "theyosh",
-  "drebick": "sdreb3421",
+  "drebick":drebick",
   "mississippichippy": "mrschippy",
   "poolguy": "ironfist68",
   "speed": "speedmcdemon",
