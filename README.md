@@ -3,7 +3,7 @@ For use in the Mario Golf Super Rush Discord server, to record ranked games with
 
 Supported Servers:
 * [Mario Golf: Super Rush](https://mr309.github.io/MGSR-TeamUp/mgsr/)
-* [Pat's Champs League](https://mr309.github.io/MGSR-TeamUp/pats/)
+<!-- * [Pat's Champs League](https://mr309.github.io/MGSR-TeamUp/pats/) -->
 
 # Instructions
 1. Select the place and player-name of each person involved in the match.  Ties are allowed.
