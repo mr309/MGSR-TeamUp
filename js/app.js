@@ -1,19 +1,19 @@
 const NICKNAME_LOOKUP = {
   // Dictionary of nicknames in MGSR Server which cannot be easily matched to actual Discord username
   // Use normalized version of names, no punctation, no spaces, all lowercase
-  "h": "igonnawrecku",
-  "phantompowered": "strangemusic",
-  "poolguy": "ironfist68",
-  "thatoneguy": "theyosh",
-  "drebick": "drebick",
-  "mississippichippy": "mrschippy",
-  "poolguy": "ironfist68",
-  "speed": "speedmcdemon",
-  "wooly": "zetite",
-  "woolyzetite": "zetite",
-  "will": "william",
-  "frostymoon": "𝓕𝓻𝓸𝓼𝓽𝔂 𝓜𝓸𝓸𝓷",
-  "uvwxyz": "fakeuser2",  // Only for testing
+  h: "igonnawrecku",
+  phantompowered: "strangemusic",
+  poolguy: "ironfist68",
+  thatoneguy: "theyosh",
+  drebick: "drebick",
+  mississippichippy: "mrschippy",
+  poolguy: "ironfist68",
+  speed: "speedmcdemon",
+  wooly: "zetite",
+  woolyzetite: "zetite",
+  will: "william",
+  frostymoon: "𝓕𝓻𝓸𝓼𝓽𝔂 𝓜𝓸𝓸𝓷",
+  uvwxyz: "fakeuser2", // Only for testing
 };
 
 const gameState = {
@@ -316,15 +316,16 @@ async function getUsers(leaderboardName) {
     ];
   } else if (leaderboardName == "MGSR") {
     leaderboardID = "812794920158363688";
-    leaderboardHash = "bWdzcg==";
-    gameId = "mgsr";
+    leaderboardHash = "bWdzcjI=";
+    gameId = "mgsr2";
     return await fetchLeaderBoard(leaderboardID, gameId);
-  } else if (leaderboardName == "MGSR 1v1") {
+  }
+  /* else if (leaderboardName == "MGSR 1v1") {
     leaderboardID = "670656871434027049";
     leaderboardHash = "bWdzciUyMDF2MQ==";
     gameId = "mgsr 1v1";
     return await fetchLeaderBoard(leaderboardID, gameId);
-  }
+  } */
 }
 
 async function fetchLeaderBoard(leaderboardID, gameId) {
