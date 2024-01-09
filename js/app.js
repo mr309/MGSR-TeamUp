@@ -314,7 +314,7 @@ async function getUsers(leaderboardName) {
       ["78", "FakeUser 4567"],
       ["90", "Fake User 8)"],
     ];
-  } else if (leaderboardName == "MGSR") {
+  } else if (leaderboardName == "mgsr2") {
     leaderboardID = "812794920158363688";
     leaderboardHash = "bWdzcjI=";
     gameId = "mgsr2";
